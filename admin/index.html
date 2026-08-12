@@ -111,9 +111,16 @@
   @media(max-width:800px){
     .prod-row{grid-template-columns:44px 1fr; grid-template-areas:"img name" "img price" "img cat" "img actions";}
     .prod-row.head{display:none;}
-    .prod-row img{grid-area:img;}
+    .prod-row .prod-img-wrap{grid-area:img;}
   }
   .prod-row img{width:56px; height:56px; object-fit:cover; border-radius:6px; background:var(--paper-2);}
+  .prod-img-wrap{position:relative; width:56px; height:56px; flex-shrink:0;}
+  .change-photo-btn{
+    position:absolute; bottom:-4px; right:-4px; width:22px; height:22px; border-radius:50%;
+    background:var(--ink); color:var(--bg); border:2px solid var(--paper); font-size:0.65rem;
+    display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0;
+  }
+  .change-photo-btn:hover{background:var(--sage-deep);}
   .prod-name-input{
     font-family:'Fraunces',serif; font-weight:500; font-size:0.98rem; border:1px solid transparent;
     background:transparent; padding:6px 8px; border-radius:6px; width:100%;
@@ -290,7 +297,6 @@
   let data = { categories: [], products: [] };
   let dirty = false;
   let nextId = 1;
-  let pendingImageDownloads = []; // {filename, dataUrl}
 
   const statusBanner = document.getElementById('statusBanner');
   const productList = document.getElementById('productList');
@@ -333,7 +339,6 @@
       if (!res.ok) throw new Error('not found');
       data = await res.json();
       nextId = Math.max(0, ...data.products.map(p => p.id || 0)) + 1;
-      pendingImageDownloads = [];
       populateCategorySelect();
       renderProductList();
       markClean(`Loaded <strong>${data.products.length}</strong> products across <strong>${data.categories.length}</strong> categories from <code>products.json</code>.`);
@@ -393,7 +398,11 @@
     const catOptions = data.categories.map(c => `<option value="${c.id}" ${c.id === p.category ? 'selected' : ''}>${escapeHtml(c.title)}</option>`).join('');
     return `
       <div class="prod-row" data-id="${p.id}">
-        <img src="${p.image}" alt="${escapeHtml(p.name)}" onerror="this.style.opacity=0.3">
+        <div class="prod-img-wrap">
+          <img src="${p.image}" alt="${escapeHtml(p.name)}" onerror="this.style.opacity=0.3">
+          <button type="button" class="change-photo-btn" title="Change photo">✎</button>
+          <input type="file" accept="image/*" class="change-photo-input" hidden>
+        </div>
         <div>
           <input type="text" class="prod-name-input" value="${escapeHtml(p.name)}" data-field="name">
           <textarea class="prod-desc-input" rows="2" data-field="description">${escapeHtml(p.description)}</textarea>
@@ -436,50 +445,87 @@
         renderProductList();
         showToast(`Removed ${product.name}`);
       });
+      const changeBtn = row.querySelector('.change-photo-btn');
+      const changeInput = row.querySelector('.change-photo-input');
+      changeBtn.addEventListener('click', () => changeInput.click());
+      changeInput.addEventListener('change', () => {
+        const file = changeInput.files[0];
+        if (file) handleChangePhoto(id, file);
+        changeInput.value = '';
+      });
     });
   }
 
+  // ================= CLOUDINARY UPLOAD =================
+  const CLOUDINARY_CLOUD_NAME = "r8hdywf4";
+  const CLOUDINARY_UPLOAD_PRESET = "ml_default";
+
+  async function uploadToCloudinary(file){
+    const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    const res = await fetch(url, { method: 'POST', body: formData });
+    if (!res.ok){
+      let message = 'Upload failed';
+      try{ const err = await res.json(); message = err.error?.message || message; }catch(e){}
+      throw new Error(message);
+    }
+    const result = await res.json();
+    return result.secure_url;
+  }
+
   // ================= ADD PRODUCT =================
-  let newImageData = null; // { fileName, dataUrl }
+  let newImageFile = null;
 
   function handleImagePreview(e){
     const file = e.target.files[0];
     const preview = document.getElementById('newImgPreview');
     if (!file){
-      newImageData = null;
+      newImageFile = null;
       preview.innerHTML = 'No photo chosen';
       return;
     }
+    newImageFile = file;
     const reader = new FileReader();
-    reader.onload = () => {
-      newImageData = { fileName: file.name, dataUrl: reader.result };
-      preview.innerHTML = `<img src="${reader.result}" alt="preview">`;
-    };
+    reader.onload = () => { preview.innerHTML = `<img src="${reader.result}" alt="preview">`; };
     reader.readAsDataURL(file);
   }
 
-  function addProduct(){
+  async function addProduct(){
     const name = document.getElementById('newName').value.trim();
     const category = document.getElementById('newCategory').value;
     const priceRaw = document.getElementById('newPrice').value;
     const tagsRaw = document.getElementById('newTags').value;
     const desc = document.getElementById('newDesc').value.trim();
     const msgEl = document.getElementById('addProductMsg');
+    const addBtn = document.getElementById('addProductBtn');
 
     if (!name){
-      msgEl.textContent = 'Please enter a product name.';
       msgEl.style.color = 'var(--danger)';
+      msgEl.textContent = 'Please enter a product name.';
       return;
     }
-    if (!newImageData){
-      msgEl.textContent = 'Please choose a photo for this soap.';
+    if (!newImageFile){
       msgEl.style.color = 'var(--danger)';
+      msgEl.textContent = 'Please choose a photo for this soap.';
       return;
     }
 
-    const ext = (newImageData.fileName.split('.').pop() || 'jpg').toLowerCase();
-    const imgFileName = `${slugify(name)}.${ext}`;
-    const imagePath = `images/${imgFileName}`;
+    addBtn.disabled = true;
+    msgEl.style.color = 'var(--ink-soft)';
+    msgEl.textContent = 'Uploading photo…';
+
+    let imageUrl;
+    try{
+      imageUrl = await uploadToCloudinary(newImageFile);
+    }catch(err){
+      addBtn.disabled = false;
+      msgEl.style.color = 'var(--danger)';
+      msgEl.textContent = `Photo upload failed: ${err.message}. Check your Cloudinary cloud name / upload preset.`;
+      console.error(err);
+      return;
+    }
 
     const product = {
       id: nextId++,
@@ -488,14 +534,13 @@
       price: priceRaw === '' ? null : Number(priceRaw),
       description: desc,
       tags: tagsRaw.split(',').map(t => t.trim()).filter(Boolean),
-      image: imagePath,
+      image: imageUrl,
       alt: name,
       sealColor: 'var(--rose)',
       sealIcon: '<svg viewBox="0 0 48 48" fill="none" stroke="var(--rose-deep)" stroke-width="2" stroke-linecap="round"><circle cx="24" cy="24" r="5"/><path d="M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5"/></svg>'
     };
 
     data.products.push(product);
-    pendingImageDownloads.push({ fileName: imgFileName, dataUrl: newImageData.dataUrl });
 
     // reset form
     document.getElementById('newName').value = '';
@@ -504,14 +549,38 @@
     document.getElementById('newDesc').value = '';
     document.getElementById('newImage').value = '';
     document.getElementById('newImgPreview').innerHTML = 'No photo chosen';
-    newImageData = null;
+    newImageFile = null;
+    addBtn.disabled = false;
 
     msgEl.style.color = 'var(--sage-deep)';
-    msgEl.textContent = `Added! Remember: this soap's photo will download as "${imgFileName}" when you click "Download products.json" — upload it into your images folder.`;
+    msgEl.textContent = 'Added! Photo uploaded to Cloudinary — no manual upload needed.';
 
     markDirty();
     renderProductList();
     showToast(`${name} added`);
+  }
+
+  // ================= CHANGE PHOTO (existing products) =================
+  async function handleChangePhoto(id, file){
+    const product = data.products.find(p => p.id === id);
+    if (!product || !file) return;
+    const row = productList.querySelector(`.prod-row[data-id="${id}"]`);
+    const img = row?.querySelector('img');
+    const changeBtn = row?.querySelector('.change-photo-btn');
+    if (changeBtn) changeBtn.disabled = true;
+    if (img) img.style.opacity = 0.4;
+    try{
+      const url = await uploadToCloudinary(file);
+      product.image = url;
+      markDirty();
+      renderProductList();
+      showToast(`Photo updated for ${product.name}`);
+    }catch(err){
+      showToast(`Upload failed: ${err.message}`);
+      console.error(err);
+      if (img) img.style.opacity = 1;
+      if (changeBtn) changeBtn.disabled = false;
+    }
   }
 
   // ================= DOWNLOAD =================
@@ -527,24 +596,8 @@
     a.remove();
     URL.revokeObjectURL(url);
 
-    // also trigger download for any newly added photos
-    pendingImageDownloads.forEach((img, i) => {
-      setTimeout(() => {
-        const a2 = document.createElement('a');
-        a2.href = img.dataUrl;
-        a2.download = img.fileName;
-        document.body.appendChild(a2);
-        a2.click();
-        a2.remove();
-      }, 300 * (i + 1));
-    });
-
-    const photoNote = pendingImageDownloads.length
-      ? ` ${pendingImageDownloads.length} new photo(s) are downloading too — upload them to your images folder.`
-      : '';
-    showToast(`products.json downloaded.${photoNote}`);
-    markClean(`Downloaded. Now upload <code>products.json</code> (and any new photos) to your hosting to make these changes live.${photoNote}`);
-    pendingImageDownloads = [];
+    showToast('products.json downloaded.');
+    markClean(`Downloaded. Upload <code>products.json</code> to your hosting to make these changes live. Photos are already hosted on Cloudinary, so no image upload needed.`);
   }
 </script>
 

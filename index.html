@@ -82,6 +82,8 @@
     padding:16px 28px; max-width:1180px; margin:0 auto;
   }
   .brand{display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem;}
+  .brand-logo{width:40px; height:40px; object-fit:cover; border-radius:8px; flex-shrink:0;}
+  .foot-logo{width:34px; height:34px;}
   .brand svg{width:30px;height:30px;flex-shrink:0;}
   .nav-links{display:flex; align-items:center; gap:30px; font-size:0.92rem;}
   .nav-links a{color:var(--ink-soft); transition:color .2s;}
@@ -330,6 +332,7 @@
   .cat-head h3{font-size:1.5rem; font-weight:500; font-style:italic;}
   .cat-head span{font-family:'Space Mono',monospace; font-size:0.7rem; color:var(--ink-soft); letter-spacing:0.05em;}
 
+  /* ---------- personalise banner ---------- */
   .personalise{background:var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
   .personalise .wrap{display:grid; grid-template-columns:1fr 0.8fr; gap:50px; align-items:center;}
   @media(max-width:860px){ .personalise .wrap{grid-template-columns:1fr;} }
@@ -385,11 +388,7 @@
 <header>
   <nav class="nav">
     <div class="brand">
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" color="#5C6E49">
-        <path d="M24 6C15 10 10 18 10 26c0 8 6 14 14 14s14-6 14-14C38 18 33 10 24 6Z"/>
-        <path d="M24 14v24"/>
-        <path d="M24 20c-3-3-7-3-9 0M24 28c3-3 7-3 9 0"/>
-      </svg>
+      <img src="images/logo.jpg" alt="Earthy Eden Handmade Soaps logo" class="brand-logo">
       Earthy Eden Soaps
     </div>
     <div class="nav-links" id="navLinks">
@@ -531,10 +530,7 @@
     <div class="foot-grid">
       <div>
         <div class="foot-brand">
-          <svg viewBox="0 0 48 48" fill="none" stroke="#F0CBD3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M24 6C15 10 10 18 10 26c0 8 6 14 14 14s14-6 14-14C38 18 33 10 24 6Z"/>
-            <path d="M24 14v24"/>
-          </svg>
+          <img src="images/logo.jpg" alt="Earthy Eden Handmade Soaps logo" class="brand-logo foot-logo">
           Earthy Eden Soaps
         </div>
         <p class="tagline">100% natural, hand-poured, small-batch soaps — made with real botanicals, no shortcuts.</p>
