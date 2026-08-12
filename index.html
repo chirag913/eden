@@ -162,44 +162,43 @@
     position:relative;
     background:var(--paper);
     border:1.5px dashed var(--line);
-    border-radius:4px;
-    padding:34px 22px 24px;
-    padding-top:44px;
+    border-radius:6px;
+    padding:0 0 22px;
+    overflow:hidden;
     box-shadow:0 1px 0 rgba(59,53,41,0.04);
     transition:transform .25s ease, box-shadow .25s ease;
   }
   .card:hover{transform:translateY(-5px); box-shadow:var(--shadow);}
-  .card::before{ /* deckled top edge */
+  .card-photo{
+    position:relative;
+    aspect-ratio:1/1;
+    overflow:hidden;
+    background:var(--paper-2);
+  }
+  .card-photo img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    transition:transform .5s ease;
+  }
+  .card:hover .card-photo img{transform:scale(1.05);}
+  .card-photo::after{ /* deckled bottom edge over the photo */
     content:"";
-    position:absolute; top:-1px; left:0; right:0; height:14px;
-    background-image: radial-gradient(circle at 10px 0, transparent 9px, var(--bg) 9.5px);
+    position:absolute; left:0; right:0; bottom:-1px; height:14px;
+    background-image: radial-gradient(circle at 10px 14px, transparent 9px, var(--paper) 9.5px);
     background-size: 20px 14px;
     background-repeat:repeat-x;
-    background-position: top left;
+    background-position: bottom left;
   }
   .seal{
-    position:absolute; top:-26px; left:24px;
-    width:58px; height:58px; border-radius:50%;
+    position:absolute; bottom:6px; left:16px; z-index:2;
+    width:46px; height:46px; border-radius:50%;
     display:flex; align-items:center; justify-content:center;
     border:2px solid var(--paper);
-    box-shadow:0 3px 8px rgba(59,53,41,0.15);
+    box-shadow:0 3px 8px rgba(59,53,41,0.2);
   }
-  .seal svg{width:30px;height:30px;}
-  .photo-placeholder{
-    margin-top:22px;
-    aspect-ratio:1/1;
-    border:1.5px dashed var(--line);
-    border-radius:3px;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:8px;
-    color:var(--ink-soft);
-    background:repeating-linear-gradient(135deg, rgba(59,53,41,0.03) 0 10px, transparent 10px 20px);
-    font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.04em; text-align:center;
-    padding:10px;
-  }
-  .photo-placeholder svg{width:26px;height:26px; opacity:0.55;}
-  .card h3{font-size:1.28rem; margin-top:20px;}
-  .card .desc{color:var(--ink-soft); font-size:0.92rem; margin-top:8px; min-height:44px;}
+  .seal svg{width:24px;height:24px;}
+  .card-body{padding:22px 20px 0;}
+  .card h3{font-size:1.2rem; margin-top:2px;}
+  .card .desc{color:var(--ink-soft); font-size:0.9rem; margin-top:8px; min-height:44px;}
   .tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:14px;}
   .tag{
     font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:0.03em;
@@ -212,6 +211,25 @@
   }
   .price{font-family:'Space Mono',monospace; font-size:0.78rem; color:var(--ink-soft);}
   .price strong{color:var(--ink); font-family:'Jost',sans-serif; font-weight:500;}
+
+  /* ---------- category nav + groups ---------- */
+  .cat-nav{
+    display:flex; flex-wrap:wrap; gap:10px; margin-bottom:56px;
+  }
+  .cat-nav a{
+    font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:0.04em; text-transform:uppercase;
+    border:1px solid var(--line); border-radius:100px; padding:8px 16px; color:var(--ink-soft);
+    transition:all .2s;
+  }
+  .cat-nav a:hover{background:var(--ink); color:var(--bg); border-color:var(--ink);}
+  .cat-group{margin-bottom:72px;}
+  .cat-group:last-child{margin-bottom:0;}
+  .cat-head{
+    display:flex; align-items:baseline; gap:16px; margin-bottom:28px;
+    padding-bottom:14px; border-bottom:1px solid var(--line);
+  }
+  .cat-head h3{font-size:1.5rem; font-weight:500; font-style:italic;}
+  .cat-head span{font-family:'Space Mono',monospace; font-size:0.7rem; color:var(--ink-soft); letter-spacing:0.05em;}
 
   /* ---------- personalise banner ---------- */
   .personalise{background:var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
@@ -311,7 +329,7 @@
     <div class="reveal in">
       <p class="eyebrow">Small-batch · Hand-poured · India</p>
       <h1>Soap, the way<br>the earth intended.</h1>
-      <p class="lede">100% natural, hand-poured glycerine soaps made with real botanicals — rosemary, multani mitti, rose, neem, coffee. No shortcuts, no synthetic fillers, no two batches quite the same.</p>
+      <p class="lede">100% natural, hand-poured soaps — from everyday neem and coffee bars to sculpted roses, hearts, and swaddled-baby keepsakes. No shortcuts, no synthetic fillers, no two batches quite the same.</p>
       <div class="hero-ctas">
         <a class="btn order-btn" data-msg="Hi! I'd like to place an order with Earthy Eden Soaps." href="#">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1s-.6.8-.7.9-.3.2-.5.1a6.6 6.6 0 0 1-1.9-1.2 7.2 7.2 0 0 1-1.3-1.6c-.1-.2 0-.4.1-.5l.4-.4.2-.4v-.4c0-.1-.5-1.3-.7-1.8s-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3a1.9 1.9 0 0 0-.6 1.4c0 .8.6 1.6.7 1.7s1.2 1.9 3 2.6a10 10 0 0 0 1 .4c.4.1.8.1 1.1.1.3 0 1-.4 1.1-.8s.2-.7.1-.8-.2-.1-.4-.2Z"/></svg>
@@ -362,121 +380,343 @@
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">The Range</p>
-      <h2>Six ways to bring the outside in.</h2>
-      <p>Every bar starts with a natural glycerine base and real botanicals — nothing synthetic doing the work. Photos and exact prices are being added soon; message us on WhatsApp for current pricing and availability.</p>
+      <h2>Nineteen bars, each hand-poured.</h2>
+      <p>Every soap is 100% natural and made in small batches — from everyday glycerine bars to sculpted, gift-ready pieces. Exact prices are being finalised; message us on WhatsApp for current pricing, sizes, and availability.</p>
     </div>
 
-    <div class="grid">
+    <nav class="cat-nav reveal">
+      <a href="#cat-baby">Baby &amp; Nursery</a>
+      <a href="#cat-coffee">Coffee &amp; Mocha</a>
+      <a href="#cat-herbal">Herbal &amp; Earthy</a>
+      <a href="#cat-rose">Rose &amp; Floral</a>
+      <a href="#cat-hearts">Hearts &amp; Gifting</a>
+    </nav>
 
-      <!-- Rosemary -->
-      <div class="card reveal">
-        <div class="seal" style="background:var(--sage);">
-          <svg viewBox="0 0 48 48" fill="none" stroke="var(--sage-deep)" stroke-width="2" stroke-linecap="round"><path d="M24 6v34"/><path d="M24 14c-5-4-11-2-11 2M24 20c-5-4-11-2-11 2M24 26c5-4 11-2 11 2M24 32c5-4 11-2 11 2"/></svg>
+    <!-- ===== Baby & Nursery ===== -->
+    <div class="cat-group" id="cat-baby">
+      <div class="cat-head reveal"><h3>Baby &amp; Nursery</h3><span>Sculpted keepsake bars</span></div>
+      <div class="grid">
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Blossom_Cradle.png" alt="Blossom Cradle soap — swaddled baby soap with roses, in pink, blue, sage and amber">
+            <div class="seal" style="background:var(--rose);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--rose-deep)" stroke-width="2" stroke-linecap="round"><circle cx="24" cy="24" r="5"/><path d="M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Blossom Cradle</h3>
+            <p class="desc">A sleeping newborn swaddled and finished with tiny roses — in blush, sky, sage, or amber.</p>
+            <div class="tags"><span class="tag">Made to Order</span><span class="tag">4 Colours</span><span class="tag">Gifting</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Blossom Cradle soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
         </div>
-        <div class="photo-placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M3 16l5-4 4 3 4-5 5 6"/></svg>
-          Product photo coming soon
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Ivory_Calm.png" alt="Ivory Calm soap — swaddled baby soap in cream with roses">
+            <div class="seal" style="background:var(--mocha);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--mocha-deep)" stroke-width="2" stroke-linecap="round"><circle cx="24" cy="24" r="5"/><path d="M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Ivory Calm</h3>
+            <p class="desc">The cradled-baby design in soft ivory, with rosebuds tucked into the wrap.</p>
+            <div class="tags"><span class="tag">Made to Order</span><span class="tag">Gifting</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Ivory Calm soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
         </div>
-        <h3>Rosemary Glycerine Soap</h3>
-        <p class="desc">Clear glycerine soap infused with rosemary — herbal, grounding, gentle everyday cleanse.</p>
-        <div class="tags"><span class="tag">Glycerine</span><span class="tag">Rosemary Oil</span><span class="tag">Vitamin E</span></div>
-        <div class="card-foot">
-          <span class="price">Price — <strong>on request</strong></span>
-          <a class="btn small order-btn" data-msg="Hi! I'd like to order the Rosemary Glycerine Soap from Earthy Eden Soaps." href="#">Order →</a>
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Rose_Lullaby.png" alt="Rose Lullaby soap — blush pink swaddled baby soap with roses">
+            <div class="seal" style="background:var(--rose);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--rose-deep)" stroke-width="2" stroke-linecap="round"><circle cx="24" cy="24" r="5"/><path d="M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Rose Lullaby</h3>
+            <p class="desc">A blush-pink baby soap with hand-carved roses across the blanket — gentle for new parents.</p>
+            <div class="tags"><span class="tag">Made to Order</span><span class="tag">Gifting</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Rose Lullaby soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
         </div>
+
       </div>
-
-      <!-- Multani Mitti -->
-      <div class="card reveal">
-        <div class="seal" style="background:var(--clay);">
-          <svg viewBox="0 0 48 48" fill="none" stroke="var(--clay-deep)" stroke-width="2" stroke-linecap="round"><path d="M10 30c4-10 10-16 14-16s10 6 14 16"/><path d="M14 30c3-6 7-10 10-10s7 4 10 10"/></svg>
-        </div>
-        <div class="photo-placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M3 16l5-4 4 3 4-5 5 6"/></svg>
-          Product photo coming soon
-        </div>
-        <h3>Multani Mitti Exfoliating Soap</h3>
-        <p class="desc">Fuller's earth worked into the bar to draw out oil and gently buff away dullness.</p>
-        <div class="tags"><span class="tag">Multani Mitti</span><span class="tag">Glycerine</span><span class="tag">Exfoliating</span></div>
-        <div class="card-foot">
-          <span class="price">Price — <strong>on request</strong></span>
-          <a class="btn small order-btn" data-msg="Hi! I'd like to order the Multani Mitti Exfoliating Soap from Earthy Eden Soaps." href="#">Order →</a>
-        </div>
-      </div>
-
-      <!-- Rose miniature -->
-      <div class="card reveal">
-        <div class="seal" style="background:var(--rose);">
-          <svg viewBox="0 0 48 48" fill="none" stroke="var(--rose-deep)" stroke-width="2" stroke-linecap="round"><circle cx="24" cy="24" r="5"/><path d="M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5M24 36c4 0 7-3 7-7 0-2-1-4-3-5M24 36c-4 0-7-3-7-7 0-2 1-4 3-5"/></svg>
-        </div>
-        <div class="photo-placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M3 16l5-4 4 3 4-5 5 6"/></svg>
-          Product photo coming soon
-        </div>
-        <h3>Rose Miniature Organic Soap</h3>
-        <p class="desc">Petite rose-scented bars, organic and gentle — lovely for gifting or trying us out.</p>
-        <div class="tags"><span class="tag">Organic</span><span class="tag">Rose</span><span class="tag">Miniature</span></div>
-        <div class="card-foot">
-          <span class="price">Price — <strong>on request</strong></span>
-          <a class="btn small order-btn" data-msg="Hi! I'd like to order the Rose Miniature Organic Soap from Earthy Eden Soaps." href="#">Order →</a>
-        </div>
-      </div>
-
-      <!-- Neem -->
-      <div class="card reveal">
-        <div class="seal" style="background:var(--olive);">
-          <svg viewBox="0 0 48 48" fill="none" stroke="var(--olive-deep)" stroke-width="2" stroke-linecap="round"><path d="M24 8c10 6 14 16 14 22 0 6-6 10-14 10s-14-4-14-10c0-6 4-16 14-22Z"/><path d="M24 8v32"/></svg>
-        </div>
-        <div class="photo-placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M3 16l5-4 4 3 4-5 5 6"/></svg>
-          Product photo coming soon
-        </div>
-        <h3>Neem Soap</h3>
-        <p class="desc">A neem-based bar suited to blemish-prone and oily skin, without stripping it dry.</p>
-        <div class="tags"><span class="tag">Neem</span><span class="tag">Glycerine</span><span class="tag">Purifying</span></div>
-        <div class="card-foot">
-          <span class="price">Price — <strong>on request</strong></span>
-          <a class="btn small order-btn" data-msg="Hi! I'd like to order the Neem Soap from Earthy Eden Soaps." href="#">Order →</a>
-        </div>
-      </div>
-
-      <!-- Coffee -->
-      <div class="card reveal">
-        <div class="seal" style="background:var(--mocha);">
-          <svg viewBox="0 0 48 48" fill="none" stroke="var(--mocha-deep)" stroke-width="2" stroke-linecap="round"><ellipse cx="24" cy="24" rx="15" ry="11"/><path d="M14 24c5-5 15-5 20 0"/></svg>
-        </div>
-        <div class="photo-placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M3 16l5-4 4 3 4-5 5 6"/></svg>
-          Product photo coming soon
-        </div>
-        <h3>Coffee Soap</h3>
-        <p class="desc">Real coffee grounds folded into glycerine — a gentle daily scrub with a wake-up scent.</p>
-        <div class="tags"><span class="tag">Coffee</span><span class="tag">Glycerine</span><span class="tag">Scrub</span></div>
-        <div class="card-foot">
-          <span class="price">Price — <strong>on request</strong></span>
-          <a class="btn small order-btn" data-msg="Hi! I'd like to order the Coffee Soap from Earthy Eden Soaps." href="#">Order →</a>
-        </div>
-      </div>
-
-      <!-- Personalised -->
-      <div class="card reveal">
-        <div class="seal" style="background:var(--lilac);">
-          <svg viewBox="0 0 48 48" fill="none" stroke="var(--lilac-deep)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9Z"/><circle cx="38" cy="34" r="2.5"/></svg>
-        </div>
-        <div class="photo-placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M3 16l5-4 4 3 4-5 5 6"/></svg>
-          Product photo coming soon
-        </div>
-        <h3>Personalised Soaps</h3>
-        <p class="desc">Pick the scent, shape, and label — made to order for gifts, weddings, and events.</p>
-        <div class="tags"><span class="tag">Made to Order</span><span class="tag">Custom Label</span><span class="tag">Gifting</span></div>
-        <div class="card-foot">
-          <span class="price">Price — <strong>on request</strong></span>
-          <a class="btn small order-btn" data-msg="Hi! I'd like to enquire about a Personalised Soap order from Earthy Eden Soaps." href="#">Order →</a>
-        </div>
-      </div>
-
     </div>
+
+    <!-- ===== Coffee & Mocha ===== -->
+    <div class="cat-group" id="cat-coffee">
+      <div class="cat-head reveal"><h3>Coffee &amp; Mocha</h3><span>For your coffee-break ritual</span></div>
+      <div class="grid">
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Cafe_Velvet.png" alt="Café Velvet soap — dark mocha bars with carved tree-of-life and mandala detail">
+            <div class="seal" style="background:var(--mocha);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--mocha-deep)" stroke-width="2" stroke-linecap="round"><ellipse cx="24" cy="24" rx="15" ry="11"/><path d="M14 24c5-5 15-5 20 0"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Café Velvet</h3>
+            <p class="desc">Deep mocha bars with a carved tree-of-life and mandala detail — made for your coffee-break ritual.</p>
+            <div class="tags"><span class="tag">Coffee</span><span class="tag">Handmade</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Café Velvet soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Mocha_Muse.png" alt="Mocha Muse soap set — floral-carved coffee bar with a heart-shaped 'for you' soap">
+            <div class="seal" style="background:var(--mocha);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--mocha-deep)" stroke-width="2" stroke-linecap="round"><ellipse cx="24" cy="24" rx="15" ry="11"/><path d="M14 24c5-5 15-5 20 0"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Mocha Muse</h3>
+            <p class="desc">A floral-carved coffee bar paired with a "for you" heart — a set made for gifting.</p>
+            <div class="tags"><span class="tag">Coffee</span><span class="tag">Gift Set</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Mocha Muse soap set from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== Herbal & Earthy ===== -->
+    <div class="cat-group" id="cat-herbal">
+      <div class="cat-head reveal"><h3>Herbal &amp; Earthy</h3><span>Purifying, exfoliating, grounding</span></div>
+      <div class="grid">
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Neem_Botanica.png" alt="Neem Botanica soap — olive green stacked bars with carved tree-of-life">
+            <div class="seal" style="background:var(--olive);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--olive-deep)" stroke-width="2" stroke-linecap="round"><path d="M24 8c10 6 14 16 14 22 0 6-6 10-14 10s-14-4-14-10c0-6 4-16 14-22Z"/><path d="M24 8v32"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Neem Botanica</h3>
+            <p class="desc">Pure neem soap, hand-stacked, with a carved tree-of-life design — a purifying daily bar.</p>
+            <div class="tags"><span class="tag">Neem</span><span class="tag">Purifying</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Neem Botanica soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Neem_and_Coffee.png" alt="Neem and Coffee soap pair — green neem bar and brown floral-carved bar">
+            <div class="seal" style="background:var(--olive);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--olive-deep)" stroke-width="2" stroke-linecap="round"><path d="M24 8c10 6 14 16 14 22 0 6-6 10-14 10s-14-4-14-10c0-6 4-16 14-22Z"/><path d="M24 8v32"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Neem and Coffee</h3>
+            <p class="desc">Neem paired with a warm floral bar — one for purifying, one for a gentle daily glow.</p>
+            <div class="tags"><span class="tag">Neem</span><span class="tag">Duo Pack</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Neem and Coffee soap pair from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Charcoal_Midnight.png" alt="Charcoal Midnight soap — black charcoal bars with ornate mandala carving">
+            <div class="seal" style="background:#C9C4B8;"><svg viewBox="0 0 48 48" fill="none" stroke="#3B3529" stroke-width="2" stroke-linecap="round"><circle cx="24" cy="24" r="15"/><path d="M24 12v24M12 24h24"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Charcoal Midnight</h3>
+            <p class="desc">Activated-look charcoal bars with an intricate carved motif — a deep-cleansing bar for oily skin.</p>
+            <div class="tags"><span class="tag">Charcoal</span><span class="tag">Deep Cleanse</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Charcoal Midnight soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Earth_and_Oats.png" alt="Earth and Oats soap — bars topped with visible whole oats">
+            <div class="seal" style="background:var(--clay);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--clay-deep)" stroke-width="2" stroke-linecap="round"><path d="M10 30c4-10 10-16 14-16s10 6 14 16"/><path d="M14 30c3-6 7-10 10-10s7 4 10 10"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Earth and Oats</h3>
+            <p class="desc">Rustic oat-topped bars for gentle, everyday exfoliation — oats and all.</p>
+            <div class="tags"><span class="tag">Oats</span><span class="tag">Exfoliating</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Earth and Oats soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Golden_Nectar.png" alt="Golden Nectar soap — golden honeycomb and bee-carved bars">
+            <div class="seal" style="background:#EBCB6E;"><svg viewBox="0 0 48 48" fill="none" stroke="#8C6B1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 8l14 8v16l-14 8-14-8V16Z"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Golden Nectar</h3>
+            <p class="desc">Honey and honeycomb-carved bars, warm and lightly scented — a golden everyday soap.</p>
+            <div class="tags"><span class="tag">Honey</span><span class="tag">Nourishing</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Golden Nectar soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== Rose & Floral ===== -->
+    <div class="cat-group" id="cat-rose">
+      <div class="cat-head reveal"><h3>Rose &amp; Floral</h3><span>Sculpted bouquets and blooms</span></div>
+      <div class="grid">
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Velvet_Rose.png" alt="Velvet Rose soap — a bouquet of roses sculpted into one deep red bar">
+            <div class="seal" style="background:var(--rose);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--rose-deep)" stroke-width="2" stroke-linecap="round"><circle cx="24" cy="24" r="5"/><path d="M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Velvet Rose</h3>
+            <p class="desc">A full bouquet of roses sculpted into one deep-red bar — as much a keepsake as a soap.</p>
+            <div class="tags"><span class="tag">Rose</span><span class="tag">Gifting</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Velvet Rose soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Rose_Velvet.png" alt="Rose Velvet soap — round carved rose medallion in pink and periwinkle">
+            <div class="seal" style="background:var(--lilac);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--lilac-deep)" stroke-width="2" stroke-linecap="round"><circle cx="24" cy="24" r="5"/><path d="M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Rose Velvet</h3>
+            <p class="desc">A single carved rose medallion in soft pink or periwinkle, smooth and lightly scented.</p>
+            <div class="tags"><span class="tag">Rose</span><span class="tag">2 Colours</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Rose Velvet soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Gulabo.png" alt="Gulabo soap — two hands cupped around a rosy pink heart">
+            <div class="seal" style="background:var(--rose);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--rose-deep)" stroke-width="2" stroke-linecap="round"><path d="M24 40s-14-9-14-19c0-5 4-9 8-9 3 0 5 2 6 4 1-2 3-4 6-4 4 0 8 4 8 9 0 10-14 19-14 19Z"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Gulabo</h3>
+            <p class="desc">Two hands cupped around a rosy pink heart — a soft, romantic gifting bar.</p>
+            <div class="tags"><span class="tag">Rose</span><span class="tag">Romantic</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Gulabo soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Golden_Tulip___Scarlet_Tulip__Blooming_Tulips_.png" alt="Golden Tulip and Scarlet Tulip soap — tulip bouquets in yellow and red">
+            <div class="seal" style="background:var(--sage);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--sage-deep)" stroke-width="2" stroke-linecap="round"><path d="M24 8c-4 4-4 10 0 14 4-4 4-10 0-14Z"/><path d="M24 22v18"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Golden Tulip &amp; Scarlet Tulip</h3>
+            <p class="desc">Hand-tied tulip bouquets in gold or scarlet, each wrapped in a carved satin bow.</p>
+            <div class="tags"><span class="tag">Tulip</span><span class="tag">2 Colours</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Golden Tulip / Scarlet Tulip soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== Hearts & Gifting ===== -->
+    <div class="cat-group" id="cat-hearts">
+      <div class="cat-head reveal"><h3>Hearts &amp; Gifting</h3><span>For Valentine's, weddings &amp; return gifts</span></div>
+      <div class="grid">
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Cupid_s_Angel.png" alt="Cupid's Angel soap — cherub carved in blush pink and periwinkle">
+            <div class="seal" style="background:var(--lilac);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--lilac-deep)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9Z"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Cupid's Angel</h3>
+            <p class="desc">A cherub in flight, carved in blush pink or periwinkle — sweet for Valentine's or anniversaries.</p>
+            <div class="tags"><span class="tag">2 Colours</span><span class="tag">Gifting</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Cupid's Angel soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Marbled_Hearts.png" alt="Marbled Hearts soap — red-and-white and charcoal-and-white marbled heart bars">
+            <div class="seal" style="background:var(--rose);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--rose-deep)" stroke-width="2" stroke-linecap="round"><path d="M24 40s-14-9-14-19c0-5 4-9 8-9 3 0 5 2 6 4 1-2 3-4 6-4 4 0 8 4 8 9 0 10-14 19-14 19Z"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Marbled Hearts</h3>
+            <p class="desc">Marbled heart bars in red-and-white or charcoal-and-white — no two swirls the same.</p>
+            <div class="tags"><span class="tag">2 Colours</span><span class="tag">One-of-a-kind</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Marbled Hearts soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Petal_Kiss.png" alt="Petal Kiss soap — lilac and coral bars with ornate heart and starburst carving">
+            <div class="seal" style="background:var(--lilac);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--lilac-deep)" stroke-width="2" stroke-linecap="round"><path d="M24 8v32M8 24h32M13 13l22 22M35 13 13 35"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Petal Kiss</h3>
+            <p class="desc">Ornate heart and starburst carvings in lilac and coral — a decorative pair.</p>
+            <div class="tags"><span class="tag">2 Colours</span><span class="tag">Decorative</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Petal Kiss soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Rosemilk_Hearts.png" alt="Rosemilk Hearts soap — ombré hearts fading from rose to milk white">
+            <div class="seal" style="background:var(--rose);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--rose-deep)" stroke-width="2" stroke-linecap="round"><path d="M24 40s-14-9-14-19c0-5 4-9 8-9 3 0 5 2 6 4 1-2 3-4 6-4 4 0 8 4 8 9 0 10-14 19-14 19Z"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Rosemilk Hearts</h3>
+            <p class="desc">Ombré hearts fading from rose to milk-white — soft as their name.</p>
+            <div class="tags"><span class="tag">Ombré</span><span class="tag">Gifting</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Rosemilk Hearts soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-photo"><img src="images/Tender_Heart.png" alt="Tender Heart soap — a solid red heart-shaped soap, handmade with love">
+            <div class="seal" style="background:var(--rose);"><svg viewBox="0 0 48 48" fill="none" stroke="var(--rose-deep)" stroke-width="2" stroke-linecap="round"><path d="M24 40s-14-9-14-19c0-5 4-9 8-9 3 0 5 2 6 4 1-2 3-4 6-4 4 0 8 4 8 9 0 10-14 19-14 19Z"/></svg></div>
+          </div>
+          <div class="card-body">
+            <h3>Tender Heart</h3>
+            <p class="desc">A solid red heart soap, handmade with love — simple, classic, and gift-ready.</p>
+            <div class="tags"><span class="tag">Classic</span><span class="tag">Gifting</span></div>
+            <div class="card-foot">
+              <span class="price">Price — <strong>on request</strong></span>
+              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Tender Heart soap from Earthy Eden Soaps." href="#">Order →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -486,7 +726,7 @@
     <div class="reveal">
       <p class="eyebrow">Made to Order</p>
       <h2>Want it personalised?</h2>
-      <p>Choose your scent blend, bar shape, and wrapper label — with names, initials, or a short message. A lovely, thoughtful option for weddings, return gifts, and festive hampers.</p>
+      <p>Most of our sculpted designs — hearts, roses, baby soaps, bouquets — can be made in your choice of colour or scent, with names, initials, or a short message added. A lovely, thoughtful option for weddings, return gifts, and festive hampers.</p>
       <div class="chip-row">
         <span class="chip">Custom scent</span>
         <span class="chip">Custom shape</span>
