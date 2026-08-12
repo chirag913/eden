@@ -1,0 +1,317 @@
+{
+  "categories": [
+    {
+      "id": "baby",
+      "title": "Baby &amp; Nursery",
+      "subtitle": "Sculpted keepsake bars"
+    },
+    {
+      "id": "coffee",
+      "title": "Coffee &amp; Mocha",
+      "subtitle": "For your coffee-break ritual"
+    },
+    {
+      "id": "herbal",
+      "title": "Herbal &amp; Earthy",
+      "subtitle": "Purifying, exfoliating, grounding"
+    },
+    {
+      "id": "rose",
+      "title": "Rose &amp; Floral",
+      "subtitle": "Sculpted bouquets and blooms"
+    },
+    {
+      "id": "hearts",
+      "title": "Hearts &amp; Gifting",
+      "subtitle": "For Valentine's, weddings &amp; return gifts"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Blossom Cradle",
+      "category": "baby",
+      "price": 249,
+      "description": "A sleeping newborn swaddled and finished with tiny roses — in blush, sky, sage, or amber.",
+      "tags": [
+        "Made to Order",
+        "4 Colours",
+        "Gifting"
+      ],
+      "image": "images/Blossom_Cradle.jpg",
+      "alt": "Blossom Cradle soap — swaddled baby soap with roses, in pink, blue, sage and amber",
+      "sealColor": "var(--rose)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--rose-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"24\" cy=\"24\" r=\"5\"/><path d=\"M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5\"/></svg>"
+    },
+    {
+      "id": 2,
+      "name": "Ivory Calm",
+      "category": "baby",
+      "price": 249,
+      "description": "The cradled-baby design in soft ivory, with rosebuds tucked into the wrap.",
+      "tags": [
+        "Made to Order",
+        "Gifting"
+      ],
+      "image": "images/Ivory_Calm.jpg",
+      "alt": "Ivory Calm soap — swaddled baby soap in cream with roses",
+      "sealColor": "var(--mocha)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--mocha-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"24\" cy=\"24\" r=\"5\"/><path d=\"M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5\"/></svg>"
+    },
+    {
+      "id": 3,
+      "name": "Rose Lullaby",
+      "category": "baby",
+      "price": 249,
+      "description": "A blush-pink baby soap with hand-carved roses across the blanket — gentle for new parents.",
+      "tags": [
+        "Made to Order",
+        "Gifting"
+      ],
+      "image": "images/Rose_Lullaby.jpg",
+      "alt": "Rose Lullaby soap — blush pink swaddled baby soap with roses",
+      "sealColor": "var(--rose)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--rose-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"24\" cy=\"24\" r=\"5\"/><path d=\"M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5\"/></svg>"
+    },
+    {
+      "id": 4,
+      "name": "Café Velvet",
+      "category": "coffee",
+      "price": 179,
+      "description": "Deep mocha bars with a carved tree-of-life and mandala detail — made for your coffee-break ritual.",
+      "tags": [
+        "Coffee",
+        "Handmade"
+      ],
+      "image": "images/Cafe_Velvet.jpg",
+      "alt": "Café Velvet soap — dark mocha bars with carved tree-of-life and mandala detail",
+      "sealColor": "var(--mocha)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--mocha-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><ellipse cx=\"24\" cy=\"24\" rx=\"15\" ry=\"11\"/><path d=\"M14 24c5-5 15-5 20 0\"/></svg>"
+    },
+    {
+      "id": 5,
+      "name": "Mocha Muse",
+      "category": "coffee",
+      "price": 179,
+      "description": "A floral-carved coffee bar paired with a \"for you\" heart — a set made for gifting.",
+      "tags": [
+        "Coffee",
+        "Gift Set"
+      ],
+      "image": "images/Mocha_Muse.jpg",
+      "alt": "Mocha Muse soap set — floral-carved coffee bar with a heart-shaped 'for you' soap",
+      "sealColor": "var(--mocha)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--mocha-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><ellipse cx=\"24\" cy=\"24\" rx=\"15\" ry=\"11\"/><path d=\"M14 24c5-5 15-5 20 0\"/></svg>"
+    },
+    {
+      "id": 6,
+      "name": "Neem Botanica",
+      "category": "herbal",
+      "price": 149,
+      "description": "Pure neem soap, hand-stacked, with a carved tree-of-life design — a purifying daily bar.",
+      "tags": [
+        "Neem",
+        "Purifying"
+      ],
+      "image": "images/Neem_Botanica.jpg",
+      "alt": "Neem Botanica soap — olive green stacked bars with carved tree-of-life",
+      "sealColor": "var(--olive)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--olive-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M24 8c10 6 14 16 14 22 0 6-6 10-14 10s-14-4-14-10c0-6 4-16 14-22Z\"/><path d=\"M24 8v32\"/></svg>"
+    },
+    {
+      "id": 7,
+      "name": "Neem and Coffee",
+      "category": "herbal",
+      "price": null,
+      "description": "Neem paired with a warm floral bar — one for purifying, one for a gentle daily glow.",
+      "tags": [
+        "Neem",
+        "Duo Pack"
+      ],
+      "image": "images/Neem_and_Coffee.jpg",
+      "alt": "Neem and Coffee soap pair — green neem bar and brown floral-carved bar",
+      "sealColor": "var(--olive)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--olive-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M24 8c10 6 14 16 14 22 0 6-6 10-14 10s-14-4-14-10c0-6 4-16 14-22Z\"/><path d=\"M24 8v32\"/></svg>"
+    },
+    {
+      "id": 8,
+      "name": "Charcoal Midnight",
+      "category": "herbal",
+      "price": 179,
+      "description": "Activated-look charcoal bars with an intricate carved motif — a deep-cleansing bar for oily skin.",
+      "tags": [
+        "Charcoal",
+        "Deep Cleanse"
+      ],
+      "image": "images/Charcoal_Midnight.jpg",
+      "alt": "Charcoal Midnight soap — black charcoal bars with ornate mandala carving",
+      "sealColor": "#C9C4B8",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"#3B3529\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"24\" cy=\"24\" r=\"15\"/><path d=\"M24 12v24M12 24h24\"/></svg>"
+    },
+    {
+      "id": 9,
+      "name": "Earth and Oats",
+      "category": "herbal",
+      "price": 149,
+      "description": "Rustic oat-topped bars for gentle, everyday exfoliation — oats and all.",
+      "tags": [
+        "Oats",
+        "Exfoliating"
+      ],
+      "image": "images/Earth_and_Oats.jpg",
+      "alt": "Earth and Oats soap — bars topped with visible whole oats",
+      "sealColor": "var(--clay)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--clay-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M10 30c4-10 10-16 14-16s10 6 14 16\"/><path d=\"M14 30c3-6 7-10 10-10s7 4 10 10\"/></svg>"
+    },
+    {
+      "id": 10,
+      "name": "Golden Nectar",
+      "category": "herbal",
+      "price": 149,
+      "description": "Honey and honeycomb-carved bars, warm and lightly scented — a golden everyday soap.",
+      "tags": [
+        "Honey",
+        "Nourishing"
+      ],
+      "image": "images/Golden_Nectar.jpg",
+      "alt": "Golden Nectar soap — golden honeycomb and bee-carved bars",
+      "sealColor": "#EBCB6E",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"#8C6B1F\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M24 8l14 8v16l-14 8-14-8V16Z\"/></svg>"
+    },
+    {
+      "id": 11,
+      "name": "Velvet Rose",
+      "category": "rose",
+      "price": 99,
+      "description": "A full bouquet of roses sculpted into one deep-red bar — as much a keepsake as a soap.",
+      "tags": [
+        "Rose",
+        "Gifting"
+      ],
+      "image": "images/Velvet_Rose.jpg",
+      "alt": "Velvet Rose soap — a bouquet of roses sculpted into one deep red bar",
+      "sealColor": "var(--rose)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--rose-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"24\" cy=\"24\" r=\"5\"/><path d=\"M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5\"/></svg>"
+    },
+    {
+      "id": 12,
+      "name": "Rose Velvet",
+      "category": "rose",
+      "price": 89,
+      "description": "A single carved rose medallion in soft pink or periwinkle, smooth and lightly scented.",
+      "tags": [
+        "Rose",
+        "2 Colours"
+      ],
+      "image": "images/Rose_Velvet.jpg",
+      "alt": "Rose Velvet soap — round carved rose medallion in pink and periwinkle",
+      "sealColor": "var(--lilac)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--lilac-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"24\" cy=\"24\" r=\"5\"/><path d=\"M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5\"/></svg>"
+    },
+    {
+      "id": 13,
+      "name": "Gulabo",
+      "category": "rose",
+      "price": 89,
+      "description": "Two hands cupped around a rosy pink heart — a soft, romantic gifting bar.",
+      "tags": [
+        "Rose",
+        "Romantic"
+      ],
+      "image": "images/Gulabo.jpg",
+      "alt": "Gulabo soap — two hands cupped around a rosy pink heart",
+      "sealColor": "var(--rose)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--rose-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M24 40s-14-9-14-19c0-5 4-9 8-9 3 0 5 2 6 4 1-2 3-4 6-4 4 0 8 4 8 9 0 10-14 19-14 19Z\"/></svg>"
+    },
+    {
+      "id": 14,
+      "name": "Golden Tulip & Scarlet Tulip",
+      "category": "rose",
+      "price": 89,
+      "description": "Hand-tied tulip bouquets in gold or scarlet, each wrapped in a carved satin bow.",
+      "tags": [
+        "Tulip",
+        "2 Colours"
+      ],
+      "image": "images/Golden_Tulip___Scarlet_Tulip__Blooming_Tulips_.jpg",
+      "alt": "Golden Tulip and Scarlet Tulip soap — tulip bouquets in yellow and red",
+      "sealColor": "var(--sage)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--sage-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M24 8c-4 4-4 10 0 14 4-4 4-10 0-14Z\"/><path d=\"M24 22v18\"/></svg>"
+    },
+    {
+      "id": 15,
+      "name": "Cupid's Angel",
+      "category": "hearts",
+      "price": 99,
+      "description": "A cherub in flight, carved in blush pink or periwinkle — sweet for Valentine's or anniversaries.",
+      "tags": [
+        "2 Colours",
+        "Gifting"
+      ],
+      "image": "images/Cupid_s_Angel.jpg",
+      "alt": "Cupid's Angel soap — cherub carved in blush pink and periwinkle",
+      "sealColor": "var(--lilac)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--lilac-deep)\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M24 6l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9Z\"/></svg>"
+    },
+    {
+      "id": 16,
+      "name": "Marbled Hearts",
+      "category": "hearts",
+      "price": 99,
+      "description": "Marbled heart bars in red-and-white or charcoal-and-white — no two swirls the same.",
+      "tags": [
+        "2 Colours",
+        "One-of-a-kind"
+      ],
+      "image": "images/Marbled_Hearts.jpg",
+      "alt": "Marbled Hearts soap — red-and-white and charcoal-and-white marbled heart bars",
+      "sealColor": "var(--rose)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--rose-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M24 40s-14-9-14-19c0-5 4-9 8-9 3 0 5 2 6 4 1-2 3-4 6-4 4 0 8 4 8 9 0 10-14 19-14 19Z\"/></svg>"
+    },
+    {
+      "id": 17,
+      "name": "Petal Kiss",
+      "category": "hearts",
+      "price": 99,
+      "description": "Ornate heart and starburst carvings in lilac and coral — a decorative pair.",
+      "tags": [
+        "2 Colours",
+        "Decorative"
+      ],
+      "image": "images/Petal_Kiss.jpg",
+      "alt": "Petal Kiss soap — lilac and coral bars with ornate heart and starburst carving",
+      "sealColor": "var(--lilac)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--lilac-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M24 8v32M8 24h32M13 13l22 22M35 13 13 35\"/></svg>"
+    },
+    {
+      "id": 18,
+      "name": "Rosemilk Hearts",
+      "category": "hearts",
+      "price": 99,
+      "description": "Ombré hearts fading from rose to milk-white — soft as their name.",
+      "tags": [
+        "Ombré",
+        "Gifting"
+      ],
+      "image": "images/Rosemilk_Hearts.jpg",
+      "alt": "Rosemilk Hearts soap — ombré hearts fading from rose to milk white",
+      "sealColor": "var(--rose)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--rose-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M24 40s-14-9-14-19c0-5 4-9 8-9 3 0 5 2 6 4 1-2 3-4 6-4 4 0 8 4 8 9 0 10-14 19-14 19Z\"/></svg>"
+    },
+    {
+      "id": 19,
+      "name": "Tender Heart",
+      "category": "hearts",
+      "price": 299,
+      "description": "A solid red heart soap, handmade with love — simple, classic, and gift-ready.",
+      "tags": [
+        "Classic",
+        "Gifting"
+      ],
+      "image": "images/Tender_Heart.jpg",
+      "alt": "Tender Heart soap — a solid red heart-shaped soap, handmade with love",
+      "sealColor": "var(--rose)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--rose-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M24 40s-14-9-14-19c0-5 4-9 8-9 3 0 5 2 6 4 1-2 3-4 6-4 4 0 8 4 8 9 0 10-14 19-14 19Z\"/></svg>"
+    }
+  ]
+}

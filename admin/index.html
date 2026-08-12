@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earthy Eden Soaps — Product Dashboard</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF7EE; --paper:#F4ECDD; --paper-2:#EFE3CE;
+    --ink:#3B3529; --ink-soft:#6B6250;
+    --sage:#AABF90; --sage-deep:#5C6E49;
+    --rose:#F0CBD3; --rose-deep:#A6495A;
+    --line:rgba(59,53,41,0.16);
+    --danger:#B4483C; --danger-bg:#F3DAD5;
+    --shadow:0 10px 30px rgba(59,53,41,0.08);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:'Jost',sans-serif; line-height:1.5;}
+  h1,h2,h3{font-family:'Fraunces',serif; font-weight:600; margin:0;}
+  .wrap{max-width:1100px; margin:0 auto; padding:0 24px;}
+  a{color:inherit;}
+
+  /* ---------- lock screen ---------- */
+  #lockScreen{
+    min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px;
+    padding:24px; text-align:center;
+  }
+  #lockScreen .card-lock{
+    background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:36px 30px;
+    max-width:380px; width:100%; box-shadow:var(--shadow);
+  }
+  #lockScreen input{
+    width:100%; padding:11px 14px; border-radius:8px; border:1px solid var(--line);
+    font-family:'Space Mono',monospace; font-size:0.95rem; margin:16px 0 10px; background:var(--bg); color:var(--ink);
+  }
+  #lockScreen .note{font-size:0.78rem; color:var(--ink-soft); margin-top:14px; line-height:1.6;}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-family:'Jost',sans-serif; font-weight:500; font-size:0.9rem;
+    padding:11px 20px; border-radius:100px; border:1px solid var(--ink);
+    background:var(--ink); color:var(--bg); cursor:pointer; transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px); box-shadow:var(--shadow);}
+  .btn.outline{background:transparent; color:var(--ink);}
+  .btn.danger{background:var(--danger); border-color:var(--danger); color:#fff;}
+  .btn.small{padding:7px 14px; font-size:0.8rem;}
+  .btn:disabled{opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none;}
+
+  /* ---------- app shell ---------- */
+  #app{display:none;}
+  header{
+    position:sticky; top:0; z-index:20; background:rgba(251,247,238,0.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); padding:18px 0;
+  }
+  header .wrap{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  .brand{font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; display:flex; align-items:center; gap:10px;}
+  .brand svg{width:26px;height:26px;}
+  .header-actions{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+  main{padding:36px 0 100px;}
+
+  .status-banner{
+    border:1px solid var(--line); background:var(--paper); border-radius:8px; padding:14px 18px;
+    font-size:0.88rem; color:var(--ink-soft); margin-bottom:28px; line-height:1.6;
+  }
+  .status-banner strong{color:var(--ink);}
+  .status-banner.unsaved{border-color:var(--rose-deep); background:var(--rose);}
+
+  .eyebrow{
+    font-family:'Space Mono',monospace; text-transform:uppercase; letter-spacing:0.12em; font-size:0.7rem;
+    color:var(--sage-deep); margin-bottom:6px; display:block;
+  }
+
+  /* ---------- add product form ---------- */
+  .panel{
+    background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:26px; margin-bottom:36px;
+  }
+  .panel h2{font-size:1.35rem; margin-bottom:18px;}
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media(max-width:680px){ .form-grid{grid-template-columns:1fr;} }
+  .field{display:flex; flex-direction:column; gap:6px;}
+  .field.full{grid-column:1 / -1;}
+  .field label{font-size:0.8rem; font-weight:500; color:var(--ink-soft);}
+  .field input, .field select, .field textarea{
+    padding:10px 12px; border-radius:7px; border:1px solid var(--line);
+    background:var(--bg); color:var(--ink); font-family:'Jost',sans-serif; font-size:0.92rem;
+  }
+  .field textarea{resize:vertical; min-height:64px;}
+  .field .hint{font-size:0.74rem; color:var(--ink-soft);}
+  .img-preview{
+    width:100%; aspect-ratio:1/1; border-radius:8px; border:1.5px dashed var(--line);
+    background:var(--paper-2); display:flex; align-items:center; justify-content:center; overflow:hidden;
+    color:var(--ink-soft); font-family:'Space Mono',monospace; font-size:0.7rem; text-align:center; padding:10px;
+  }
+  .img-preview img{width:100%; height:100%; object-fit:cover;}
+  .form-actions{margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;}
+
+  /* ---------- product table ---------- */
+  .cat-block{margin-bottom:38px;}
+  .cat-block h3{font-size:1.1rem; font-style:italic; font-weight:500; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--line);}
+  .prod-row{
+    display:grid; grid-template-columns:56px 1.6fr 1fr 110px 90px; gap:14px; align-items:center;
+    padding:12px 10px; border-bottom:1px dashed var(--line);
+  }
+  .prod-row.head{
+    font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--ink-soft); border-bottom:1px solid var(--line);
+  }
+  @media(max-width:800px){
+    .prod-row{grid-template-columns:44px 1fr; grid-template-areas:"img name" "img price" "img cat" "img actions";}
+    .prod-row.head{display:none;}
+    .prod-row img{grid-area:img;}
+  }
+  .prod-row img{width:56px; height:56px; object-fit:cover; border-radius:6px; background:var(--paper-2);}
+  .prod-name-input{
+    font-family:'Fraunces',serif; font-weight:500; font-size:0.98rem; border:1px solid transparent;
+    background:transparent; padding:6px 8px; border-radius:6px; width:100%;
+  }
+  .prod-name-input:focus, .prod-desc-input:focus, .prod-price-input:focus, .prod-cat-input:focus{
+    border-color:var(--line); background:var(--bg); outline:none;
+  }
+  .prod-desc-input{
+    font-family:'Jost',sans-serif; font-size:0.82rem; color:var(--ink-soft); border:1px solid transparent;
+    background:transparent; padding:6px 8px; border-radius:6px; width:100%; resize:vertical; min-height:32px;
+  }
+  .prod-price-input{
+    font-family:'Space Mono',monospace; font-size:0.85rem; border:1px solid var(--line);
+    background:var(--bg); padding:8px 10px; border-radius:6px; width:100%;
+  }
+  .prod-cat-input{
+    font-family:'Jost',sans-serif; font-size:0.82rem; border:1px solid var(--line);
+    background:var(--bg); padding:7px 8px; border-radius:6px; width:100%;
+  }
+  .row-actions{display:flex; gap:8px; justify-content:flex-end;}
+  .icon-only-btn{
+    width:32px; height:32px; border-radius:50%; border:1px solid var(--line); background:var(--bg);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink-soft);
+  }
+  .icon-only-btn:hover{background:var(--danger-bg); color:var(--danger); border-color:var(--danger);}
+
+  .empty-note{color:var(--ink-soft); font-size:0.9rem; padding:24px; text-align:center;}
+
+  .instructions{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:10px; padding:24px 26px; margin-top:44px;
+  }
+  .instructions h2{font-size:1.2rem; margin-bottom:12px;}
+  .instructions ol{margin:0; padding-left:20px; font-size:0.9rem; color:var(--ink-soft); line-height:1.9;}
+  .instructions code{
+    background:var(--bg); padding:2px 6px; border-radius:4px; font-family:'Space Mono',monospace; font-size:0.82rem; color:var(--ink);
+  }
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:var(--bg); padding:12px 22px; border-radius:100px; font-size:0.88rem;
+    opacity:0; pointer-events:none; transition:all .3s ease; z-index:100; box-shadow:var(--shadow);
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- ============ LOCK SCREEN ============ -->
+<div id="lockScreen">
+  <div class="card-lock">
+    <span class="eyebrow">Earthy Eden Soaps</span>
+    <h1 style="font-size:1.5rem;">Product Dashboard</h1>
+    <input type="text" id="usernameInput" placeholder="Username" autocomplete="off" style="margin:16px 0 10px;">
+    <input type="password" id="passcodeInput" placeholder="Password" autocomplete="off" style="margin:0 0 10px;">
+    <button class="btn" id="unlockBtn" style="width:100%;">Log In</button>
+    <p class="note">This is a soft lock only — anyone with this page's URL and the login (or who views the page source) can get in. It just keeps casual visitors out; it is not real security. Don't link to this page from your public site, and don't share the URL widely.</p>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app">
+  <header>
+    <div class="wrap">
+      <div class="brand">
+        <svg viewBox="0 0 48 48" fill="none" stroke="#5C6E49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6C15 10 10 18 10 26c0 8 6 14 14 14s14-6 14-14C38 18 33 10 24 6Z"/><path d="M24 14v24"/></svg>
+        Product Dashboard
+      </div>
+      <div class="header-actions">
+        <span id="dirtyIndicator" style="font-size:0.8rem; color:var(--ink-soft);"></span>
+        <button class="btn outline small" id="reloadBtn">Reload from file</button>
+        <button class="btn small" id="downloadBtn">Download products.json</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+
+      <div class="status-banner" id="statusBanner">
+        Loading your current catalogue from <strong>products.json</strong>…
+      </div>
+
+      <!-- Add product -->
+      <div class="panel">
+        <h2>Add a new soap</h2>
+        <div class="form-grid">
+          <div class="field">
+            <label for="newName">Product name</label>
+            <input type="text" id="newName" placeholder="e.g. Lavender Dreams">
+          </div>
+          <div class="field">
+            <label for="newCategory">Category</label>
+            <select id="newCategory"></select>
+          </div>
+          <div class="field">
+            <label for="newPrice">Price (₹) — leave blank for "on request"</label>
+            <input type="number" id="newPrice" min="0" placeholder="e.g. 149">
+          </div>
+          <div class="field">
+            <label for="newTags">Tags (comma separated)</label>
+            <input type="text" id="newTags" placeholder="e.g. Handmade, Gifting">
+          </div>
+          <div class="field full">
+            <label for="newDesc">Short description</label>
+            <textarea id="newDesc" placeholder="One or two sentences about this soap."></textarea>
+          </div>
+          <div class="field full">
+            <label for="newImage">Product photo</label>
+            <input type="file" id="newImage" accept="image/*">
+            <span class="hint">After you download, this photo also downloads separately — upload it into your site's <code>images</code> folder using the exact file name shown.</span>
+            <div class="img-preview" id="newImgPreview" style="max-width:180px; margin-top:8px;">No photo chosen</div>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn" id="addProductBtn">Add Soap</button>
+          <span id="addProductMsg" style="font-size:0.82rem; color:var(--ink-soft); align-self:center;"></span>
+        </div>
+      </div>
+
+      <!-- Product list -->
+      <div id="productList">
+        <p class="empty-note">Loading products…</p>
+      </div>
+
+      <div class="instructions">
+        <h2>How this dashboard works</h2>
+        <ol>
+          <li>This dashboard lives at <code>yoursite.com/admin</code> — a separate page from your shop, in its own <code>admin</code> folder. It is <strong>not connected to a live database</strong>, so there's no server to save changes to automatically.</li>
+          <li>Edit prices, descriptions, or tags directly in the list below (they save automatically as you type). Add new soaps using the form above.</li>
+          <li>When you're happy with your changes, click <strong>"Download products.json"</strong> at the top. This downloads one small file.</li>
+          <li>Upload that downloaded file to your website's hosting, in the <strong>same folder as <code>index.html</code></strong>, replacing the old <code>products.json</code>.</li>
+          <li>If you added a new soap with a photo, also upload that photo file into your site's <code>images</code> folder — use the exact file name shown when you added it.</li>
+          <li>Refresh your live website — the changes will now show for everyone.</li>
+        </ol>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // Change these to set your own dashboard login.
+  const ADMIN_USERNAME = "admin";
+  const ADMIN_PASSWORD = "mrinmai@13";
+
+  const lockScreen = document.getElementById('lockScreen');
+  const app = document.getElementById('app');
+  const usernameInput = document.getElementById('usernameInput');
+  const passcodeInput = document.getElementById('passcodeInput');
+
+  function tryUnlock(){
+    if (usernameInput.value === ADMIN_USERNAME && passcodeInput.value === ADMIN_PASSWORD){
+      lockScreen.style.display = 'none';
+      app.style.display = 'block';
+      init();
+    } else {
+      passcodeInput.style.borderColor = 'var(--danger)';
+      passcodeInput.value = '';
+      passcodeInput.placeholder = 'Wrong login — try again';
+    }
+  }
+  document.getElementById('unlockBtn').addEventListener('click', tryUnlock);
+  passcodeInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+  usernameInput.addEventListener('keydown', e => { if (e.key === 'Enter') passcodeInput.focus(); });
+
+  // ================= APP STATE =================
+  let data = { categories: [], products: [] };
+  let dirty = false;
+  let nextId = 1;
+  let pendingImageDownloads = []; // {filename, dataUrl}
+
+  const statusBanner = document.getElementById('statusBanner');
+  const productList = document.getElementById('productList');
+  const dirtyIndicator = document.getElementById('dirtyIndicator');
+  const toast = document.getElementById('toast');
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2600);
+  }
+
+  function markDirty(){
+    dirty = true;
+    dirtyIndicator.textContent = 'Unsaved changes — remember to download';
+    statusBanner.classList.add('unsaved');
+  }
+  function markClean(msg){
+    dirty = false;
+    dirtyIndicator.textContent = '';
+    statusBanner.classList.remove('unsaved');
+    if (msg) statusBanner.innerHTML = msg;
+  }
+
+  async function init(){
+    await loadData();
+    document.getElementById('reloadBtn').addEventListener('click', async () => {
+      if (dirty && !confirm('You have unsaved changes that will be lost. Reload anyway?')) return;
+      await loadData();
+    });
+    document.getElementById('downloadBtn').addEventListener('click', downloadAll);
+    document.getElementById('addProductBtn').addEventListener('click', addProduct);
+    document.getElementById('newImage').addEventListener('change', handleImagePreview);
+  }
+
+  async function loadData(){
+    statusBanner.innerHTML = 'Loading your current catalogue from <strong>products.json</strong>…';
+    try{
+      const res = await fetch('/products.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('not found');
+      data = await res.json();
+      nextId = Math.max(0, ...data.products.map(p => p.id || 0)) + 1;
+      pendingImageDownloads = [];
+      populateCategorySelect();
+      renderProductList();
+      markClean(`Loaded <strong>${data.products.length}</strong> products across <strong>${data.categories.length}</strong> categories from <code>products.json</code>.`);
+    }catch(err){
+      statusBanner.innerHTML = 'Could not find <strong>products.json</strong> at your site\'s root. Make sure <code>products.json</code> is in the top-level folder of your site (next to <code>index.html</code>, not inside <code>admin</code>), and that you are viewing this via your live site or a local web server (not by double-clicking the file).';
+      console.error(err);
+    }
+  }
+
+  function populateCategorySelect(){
+    const sel = document.getElementById('newCategory');
+    sel.innerHTML = data.categories.map(c => `<option value="${c.id}">${escapeHtml(c.title)}</option>`).join('');
+  }
+
+  function escapeHtml(str){
+    return String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function slugify(name){
+    return name.trim().replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+  }
+
+  // ================= RENDER PRODUCT LIST =================
+  function renderProductList(){
+    if (data.products.length === 0){
+      productList.innerHTML = '<p class="empty-note">No products yet — add your first soap above.</p>';
+      return;
+    }
+    productList.innerHTML = data.categories.map(cat => {
+      const items = data.products.filter(p => p.category === cat.id);
+      if (items.length === 0) return '';
+      return `
+        <div class="cat-block">
+          <h3>${escapeHtml(cat.title)} <span style="font-family:'Space Mono',monospace; font-size:0.7rem; color:var(--ink-soft);">(${items.length})</span></h3>
+          <div class="prod-row head">
+            <span></span><span>Name &amp; description</span><span>Category</span><span>Price (₹)</span><span></span>
+          </div>
+          ${items.map(rowHtml).join('')}
+        </div>`;
+    }).join('');
+
+    // uncategorised safety net
+    const uncategorised = data.products.filter(p => !data.categories.some(c => c.id === p.category));
+    if (uncategorised.length){
+      productList.innerHTML += `
+        <div class="cat-block">
+          <h3>Uncategorised</h3>
+          <div class="prod-row head"><span></span><span>Name &amp; description</span><span>Category</span><span>Price (₹)</span><span></span></div>
+          ${uncategorised.map(rowHtml).join('')}
+        </div>`;
+    }
+
+    bindRowEvents();
+  }
+
+  function rowHtml(p){
+    const catOptions = data.categories.map(c => `<option value="${c.id}" ${c.id === p.category ? 'selected' : ''}>${escapeHtml(c.title)}</option>`).join('');
+    return `
+      <div class="prod-row" data-id="${p.id}">
+        <img src="${p.image}" alt="${escapeHtml(p.name)}" onerror="this.style.opacity=0.3">
+        <div>
+          <input type="text" class="prod-name-input" value="${escapeHtml(p.name)}" data-field="name">
+          <textarea class="prod-desc-input" rows="2" data-field="description">${escapeHtml(p.description)}</textarea>
+        </div>
+        <select class="prod-cat-input" data-field="category">${catOptions}</select>
+        <input type="number" class="prod-price-input" min="0" placeholder="TBC" value="${p.price ?? ''}" data-field="price">
+        <div class="row-actions">
+          <button type="button" class="icon-only-btn delete-row-btn" title="Delete">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/></svg>
+          </button>
+        </div>
+      </div>`;
+  }
+
+  function bindRowEvents(){
+    productList.querySelectorAll('.prod-row[data-id]').forEach(row => {
+      const id = Number(row.dataset.id);
+      row.querySelectorAll('[data-field]').forEach(el => {
+        el.addEventListener('input', () => {
+          const product = data.products.find(p => p.id === id);
+          if (!product) return;
+          const field = el.dataset.field;
+          if (field === 'price'){
+            product.price = el.value === '' ? null : Number(el.value);
+          } else {
+            product[field] = el.value;
+          }
+          markDirty();
+        });
+      });
+      row.querySelector('.delete-row-btn').addEventListener('click', () => {
+        const product = data.products.find(p => p.id === id);
+        if (!product) return;
+        if (!confirm(`Remove "${product.name}" from the catalogue?`)) return;
+        data.products = data.products.filter(p => p.id !== id);
+        markDirty();
+        renderProductList();
+        showToast(`Removed ${product.name}`);
+      });
+    });
+  }
+
+  // ================= ADD PRODUCT =================
+  let newImageData = null; // { fileName, dataUrl }
+
+  function handleImagePreview(e){
+    const file = e.target.files[0];
+    const preview = document.getElementById('newImgPreview');
+    if (!file){
+      newImageData = null;
+      preview.innerHTML = 'No photo chosen';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      newImageData = { fileName: file.name, dataUrl: reader.result };
+      preview.innerHTML = `<img src="${reader.result}" alt="preview">`;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function addProduct(){
+    const name = document.getElementById('newName').value.trim();
+    const category = document.getElementById('newCategory').value;
+    const priceRaw = document.getElementById('newPrice').value;
+    const tagsRaw = document.getElementById('newTags').value;
+    const desc = document.getElementById('newDesc').value.trim();
+    const msgEl = document.getElementById('addProductMsg');
+
+    if (!name){
+      msgEl.textContent = 'Please enter a product name.';
+      msgEl.style.color = 'var(--danger)';
+      return;
+    }
+    if (!newImageData){
+      msgEl.textContent = 'Please choose a photo for this soap.';
+      msgEl.style.color = 'var(--danger)';
+      return;
+    }
+
+    const ext = (newImageData.fileName.split('.').pop() || 'jpg').toLowerCase();
+    const imgFileName = `${slugify(name)}.${ext}`;
+    const imagePath = `images/${imgFileName}`;
+
+    const product = {
+      id: nextId++,
+      name,
+      category,
+      price: priceRaw === '' ? null : Number(priceRaw),
+      description: desc,
+      tags: tagsRaw.split(',').map(t => t.trim()).filter(Boolean),
+      image: imagePath,
+      alt: name,
+      sealColor: 'var(--rose)',
+      sealIcon: '<svg viewBox="0 0 48 48" fill="none" stroke="var(--rose-deep)" stroke-width="2" stroke-linecap="round"><circle cx="24" cy="24" r="5"/><path d="M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5"/></svg>'
+    };
+
+    data.products.push(product);
+    pendingImageDownloads.push({ fileName: imgFileName, dataUrl: newImageData.dataUrl });
+
+    // reset form
+    document.getElementById('newName').value = '';
+    document.getElementById('newPrice').value = '';
+    document.getElementById('newTags').value = '';
+    document.getElementById('newDesc').value = '';
+    document.getElementById('newImage').value = '';
+    document.getElementById('newImgPreview').innerHTML = 'No photo chosen';
+    newImageData = null;
+
+    msgEl.style.color = 'var(--sage-deep)';
+    msgEl.textContent = `Added! Remember: this soap's photo will download as "${imgFileName}" when you click "Download products.json" — upload it into your images folder.`;
+
+    markDirty();
+    renderProductList();
+    showToast(`${name} added`);
+  }
+
+  // ================= DOWNLOAD =================
+  function downloadAll(){
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'products.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+
+    // also trigger download for any newly added photos
+    pendingImageDownloads.forEach((img, i) => {
+      setTimeout(() => {
+        const a2 = document.createElement('a');
+        a2.href = img.dataUrl;
+        a2.download = img.fileName;
+        document.body.appendChild(a2);
+        a2.click();
+        a2.remove();
+      }, 300 * (i + 1));
+    });
+
+    const photoNote = pendingImageDownloads.length
+      ? ` ${pendingImageDownloads.length} new photo(s) are downloading too — upload them to your images folder.`
+      : '';
+    showToast(`products.json downloaded.${photoNote}`);
+    markClean(`Downloaded. Now upload <code>products.json</code> (and any new photos) to your hosting to make these changes live.${photoNote}`);
+    pendingImageDownloads = [];
+  }
+</script>
+
+</body>
+</html>
