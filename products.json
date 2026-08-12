@@ -31,7 +31,7 @@
       "id": 1,
       "name": "Blossom Cradle",
       "category": "baby",
-      "price": 249,
+      "price": 1059,
       "description": "A sleeping newborn swaddled and finished with tiny roses — in blush, sky, sage, or amber.",
       "tags": [
         "Made to Order",
@@ -47,7 +47,7 @@
       "id": 2,
       "name": "Ivory Calm",
       "category": "baby",
-      "price": 249,
+      "price": 299,
       "description": "The cradled-baby design in soft ivory, with rosebuds tucked into the wrap.",
       "tags": [
         "Made to Order",
@@ -62,7 +62,7 @@
       "id": 3,
       "name": "Rose Lullaby",
       "category": "baby",
-      "price": 249,
+      "price": 299,
       "description": "A blush-pink baby soap with hand-carved roses across the blanket — gentle for new parents.",
       "tags": [
         "Made to Order",
@@ -75,9 +75,9 @@
     },
     {
       "id": 4,
-      "name": "Café Velvet",
+      "name": "Café Velvet Combo",
       "category": "coffee",
-      "price": 179,
+      "price": 349,
       "description": "Deep mocha bars with a carved tree-of-life and mandala detail — made for your coffee-break ritual.",
       "tags": [
         "Coffee",
@@ -107,7 +107,7 @@
       "id": 6,
       "name": "Neem Botanica",
       "category": "herbal",
-      "price": 149,
+      "price": 169,
       "description": "Pure neem soap, hand-stacked, with a carved tree-of-life design — a purifying daily bar.",
       "tags": [
         "Neem",
@@ -120,9 +120,9 @@
     },
     {
       "id": 7,
-      "name": "Neem and Coffee",
+      "name": "Neem and Coffee Combo",
       "category": "herbal",
-      "price": null,
+      "price": 339,
       "description": "Neem paired with a warm floral bar — one for purifying, one for a gentle daily glow.",
       "tags": [
         "Neem",
@@ -152,7 +152,7 @@
       "id": 9,
       "name": "Earth and Oats",
       "category": "herbal",
-      "price": 149,
+      "price": 169,
       "description": "Rustic oat-topped bars for gentle, everyday exfoliation — oats and all.",
       "tags": [
         "Oats",
@@ -167,7 +167,7 @@
       "id": 10,
       "name": "Golden Nectar",
       "category": "herbal",
-      "price": 149,
+      "price": 159,
       "description": "Honey and honeycomb-carved bars, warm and lightly scented — a golden everyday soap.",
       "tags": [
         "Honey",
@@ -180,9 +180,9 @@
     },
     {
       "id": 11,
-      "name": "Velvet Rose",
+      "name": "Velvet Rose ",
       "category": "rose",
-      "price": 99,
+      "price": 139,
       "description": "A full bouquet of roses sculpted into one deep-red bar — as much a keepsake as a soap.",
       "tags": [
         "Rose",
@@ -197,7 +197,7 @@
       "id": 12,
       "name": "Rose Velvet",
       "category": "rose",
-      "price": 89,
+      "price": 109,
       "description": "A single carved rose medallion in soft pink or periwinkle, smooth and lightly scented.",
       "tags": [
         "Rose",
@@ -212,7 +212,7 @@
       "id": 13,
       "name": "Gulabo",
       "category": "rose",
-      "price": 89,
+      "price": 109,
       "description": "Two hands cupped around a rosy pink heart — a soft, romantic gifting bar.",
       "tags": [
         "Rose",
@@ -225,9 +225,9 @@
     },
     {
       "id": 14,
-      "name": "Golden Tulip & Scarlet Tulip",
+      "name": "Blooming Tulips Combo",
       "category": "rose",
-      "price": 89,
+      "price": 179,
       "description": "Hand-tied tulip bouquets in gold or scarlet, each wrapped in a carved satin bow.",
       "tags": [
         "Tulip",
@@ -240,9 +240,9 @@
     },
     {
       "id": 15,
-      "name": "Cupid's Angel",
+      "name": "Cupid's Angels",
       "category": "hearts",
-      "price": 99,
+      "price": 289,
       "description": "A cherub in flight, carved in blush pink or periwinkle — sweet for Valentine's or anniversaries.",
       "tags": [
         "2 Colours",
@@ -257,7 +257,7 @@
       "id": 16,
       "name": "Marbled Hearts",
       "category": "hearts",
-      "price": 99,
+      "price": 199,
       "description": "Marbled heart bars in red-and-white or charcoal-and-white — no two swirls the same.",
       "tags": [
         "2 Colours",
@@ -271,8 +271,8 @@
     {
       "id": 17,
       "name": "Petal Kiss",
-      "category": "hearts",
-      "price": 99,
+      "category": "rose",
+      "price": 149,
       "description": "Ornate heart and starburst carvings in lilac and coral — a decorative pair.",
       "tags": [
         "2 Colours",
@@ -285,10 +285,10 @@
     },
     {
       "id": 18,
-      "name": "Rosemilk Hearts",
+      "name": "Rosemilk Heart",
       "category": "hearts",
-      "price": 99,
-      "description": "Ombré hearts fading from rose to milk-white — soft as their name.",
+      "price": 109,
+      "description": "Ombré hearts fading from rose to milk-white — soft as it's name.",
       "tags": [
         "Ombré",
         "Gifting"
@@ -302,7 +302,7 @@
       "id": 19,
       "name": "Tender Heart",
       "category": "hearts",
-      "price": 299,
+      "price": 349,
       "description": "A solid red heart soap, handmade with love — simple, classic, and gift-ready.",
       "tags": [
         "Classic",
@@ -312,6 +312,96 @@
       "alt": "Tender Heart soap — a solid red heart-shaped soap, handmade with love",
       "sealColor": "var(--rose)",
       "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--rose-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M24 40s-14-9-14-19c0-5 4-9 8-9 3 0 5 2 6 4 1-2 3-4 6-4 4 0 8 4 8 9 0 10-14 19-14 19Z\"/></svg>"
+    },
+    {
+      "id": 20,
+      "name": "Cappuccino \"For You\"",
+      "category": "coffee",
+      "price": 179,
+      "description": "A rich cappuccino-inspired coffee bar paired with a “for you” heart — a warm, indulgent treat made for gifting",
+      "tags": [
+        "Coffee",
+        "Homemade"
+      ],
+      "image": "images/Cappuccino_For_You.jpg",
+      "alt": "Cappuccino \"For You\"",
+      "sealColor": "var(--mocha)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--mocha-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><ellipse cx=\"24\" cy=\"24\" rx=\"15\" ry=\"11\"/><path d=\"M14 24c5-5 15-5 20 0\"/></svg>"
+    },
+    {
+      "id": 21,
+      "name": "Amber and Blue Sleeping Baby Combo",
+      "category": "baby",
+      "price": 559,
+      "description": "A tiny sleeping baby wrapped in a cozy embrace — a warm, adorable soap combo made for gentle little moments",
+      "tags": [
+        "Made to Order",
+        "Gifting"
+      ],
+      "image": "images/Amber_and_Blue_Sleeping_Baby_Combo.jpg",
+      "alt": "Amber and Blue Sleeping Baby Combo",
+      "sealColor": "var(--rose)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--rose-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"24\" cy=\"24\" r=\"5\"/><path d=\"M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5\"/></svg>"
+    },
+    {
+      "id": 22,
+      "name": "Scarlet Rose",
+      "category": "rose",
+      "price": 109,
+      "description": "A delicate scarlet tulip in full bloom — a vibrant, floral soap crafted to add a touch of elegance and freshness to every bath",
+      "tags": [
+        "Tulip",
+        "Floral"
+      ],
+      "image": "images/Scarlet_Rose.jpg",
+      "alt": "Scarlet Rose",
+      "sealColor": "var(--rose)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--rose-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"24\" cy=\"24\" r=\"5\"/><path d=\"M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5\"/></svg>"
+    },
+    {
+      "id": 23,
+      "name": "Mint Meadow Baby",
+      "category": "baby",
+      "price": 299,
+      "description": "A tiny mint-green sleeping baby — a soft, soothing soap crafted to bring a touch of freshness, comfort, and sweetness to every bath",
+      "tags": [
+        "Made to Order",
+        "Gifting"
+      ],
+      "image": "images/Mint_Meadow_Baby.jpg",
+      "alt": "Mint Meadow Baby",
+      "sealColor": "var(--rose)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--rose-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"24\" cy=\"24\" r=\"5\"/><path d=\"M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5\"/></svg>"
+    },
+    {
+      "id": 24,
+      "name": "Sweet Dreams Duo",
+      "category": "baby",
+      "price": 559,
+      "description": "A sweet duo of pink and blue sleeping baby soaps — two adorable little bars crafted to bring softness, comfort, and love to every bath",
+      "tags": [
+        "Made to Order",
+        "Gifting"
+      ],
+      "image": "images/Sweet_Dreams_Duo.jpg",
+      "alt": "Sweet Dreams Duo",
+      "sealColor": "var(--rose)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--rose-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"24\" cy=\"24\" r=\"5\"/><path d=\"M24 12c4 0 7 3 7 7 0 2-1 4-3 5M24 12c-4 0-7 3-7 7 0 2 1 4 3 5\"/></svg>"
+    },
+    {
+      "id": 25,
+      "name": "Espresso Silk & Petals",
+      "category": "coffee",
+      "price": 179,
+      "description": "A luxurious duo of rich espresso coffee and delicate petals — a beautifully crafted, made to indulge, refresh, and pamper your senses",
+      "tags": [
+        "Coffee",
+        "Handmade"
+      ],
+      "image": "images/Espresso_Silk_Petals.jpg",
+      "alt": "Espresso Silk & Petals",
+      "sealColor": "var(--mocha)",
+      "sealIcon": "<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"var(--mocha-deep)\" stroke-width=\"2\" stroke-linecap=\"round\"><ellipse cx=\"24\" cy=\"24\" rx=\"15\" ry=\"11\"/><path d=\"M14 24c5-5 15-5 20 0\"/></svg>"
     }
   ]
 }
