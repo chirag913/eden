@@ -125,6 +125,11 @@
     font-family:'Jost',sans-serif; font-size:0.82rem; color:var(--ink-soft); border:1px solid transparent;
     background:transparent; padding:6px 8px; border-radius:6px; width:100%; resize:vertical; min-height:32px;
   }
+  .prod-tags-input{
+    font-family:'Space Mono',monospace; font-size:0.72rem; color:var(--ink-soft); border:1px solid transparent;
+    background:transparent; padding:6px 8px; border-radius:6px; width:100%; margin-top:2px;
+  }
+  .prod-tags-input:focus{border-color:var(--line); background:var(--bg); outline:none;}
   .prod-price-input{
     font-family:'Space Mono',monospace; font-size:0.85rem; border:1px solid var(--line);
     background:var(--bg); padding:8px 10px; border-radius:6px; width:100%;
@@ -392,6 +397,7 @@
         <div>
           <input type="text" class="prod-name-input" value="${escapeHtml(p.name)}" data-field="name">
           <textarea class="prod-desc-input" rows="2" data-field="description">${escapeHtml(p.description)}</textarea>
+          <input type="text" class="prod-tags-input" data-field="tags" value="${escapeHtml((p.tags || []).join(', '))}" placeholder="Tags, comma separated">
         </div>
         <select class="prod-cat-input" data-field="category">${catOptions}</select>
         <input type="number" class="prod-price-input" min="0" placeholder="TBC" value="${p.price ?? ''}" data-field="price">
@@ -413,6 +419,8 @@
           const field = el.dataset.field;
           if (field === 'price'){
             product.price = el.value === '' ? null : Number(el.value);
+          } else if (field === 'tags'){
+            product.tags = el.value.split(',').map(t => t.trim()).filter(Boolean);
           } else {
             product[field] = el.value;
           }
