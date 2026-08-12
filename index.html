@@ -135,21 +135,36 @@
   }
 
   /* ---------- hero ---------- */
-  .hero{padding:64px 0 40px;}
-  .hero .wrap{display:grid; grid-template-columns:1.05fr 0.95fr; gap:50px; align-items:center;}
-  @media(max-width:900px){ .hero .wrap{grid-template-columns:1fr;} }
+  .hero{
+    padding:110px 0 110px;
+    background-color: var(--bg);
+    background-image: url('images/hero-soap.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+  .hero .wrap{max-width:1280px;}
+  .hero-text{max-width:560px;}
   .hero h1{font-size:clamp(2.3rem, 4.6vw, 3.6rem); line-height:1.06; margin:18px 0 20px;}
   .hero p.lede{font-size:1.08rem; color:var(--ink-soft); max-width:44ch; margin-bottom:30px;}
   .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
-  .hero-art{position:relative; display:flex; align-items:center; justify-content:center;}
-  .hero-photo{
-    width:100%; max-width:460px; height:auto; border-radius:18px;
-    box-shadow:0 20px 50px rgba(59,53,41,0.18);
-  }
+  .hero-mobile-photo{display:none;}
   .float{animation:float 6s ease-in-out infinite;}
   .float-slow{animation:float 8s ease-in-out infinite;}
   @keyframes float{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
   @media (prefers-reduced-motion: reduce){ .float,.float-slow{animation:none;} }
+  @media(max-width:900px){
+    .hero{
+      background-image:none;
+      padding:48px 0 0;
+    }
+    .hero-text{max-width:none;}
+    .hero-mobile-photo{
+      display:block; margin-top:36px; border-radius:0;
+      overflow:hidden;
+    }
+    .hero-mobile-photo img{width:100%; height:auto; display:block;}
+  }
 
   /* ---------- badge strip ---------- */
   .strip{
@@ -434,7 +449,7 @@
 <!-- ================= HERO ================= -->
 <section class="hero">
   <div class="wrap">
-    <div class="reveal in">
+    <div class="hero-text reveal in">
       <p class="eyebrow">Small-batch · Hand-poured · India</p>
       <h1>Soap, the way<br>the earth intended.</h1>
       <p class="lede">100% natural, hand-poured soaps — from everyday neem and coffee bars to sculpted roses, hearts, and swaddled-baby keepsakes. No shortcuts, no synthetic fillers, no two batches quite the same.</p>
@@ -446,9 +461,9 @@
         <a class="btn outline" href="#shop">Browse the range ↓</a>
       </div>
     </div>
-    <div class="hero-art reveal in">
-      <img src="images/hero-soap.jpg" alt="Earthy Eden Handmade Soaps bar on a stone dish with dried flowers" class="hero-photo">
-    </div>
+  </div>
+  <div class="hero-mobile-photo">
+    <img src="images/hero-soap.jpg" alt="Earthy Eden Handmade Soaps bar on a stone dish with dried flowers">
   </div>
 </section>
 
