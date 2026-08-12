@@ -210,7 +210,106 @@
     gap:10px; flex-wrap:wrap;
   }
   .price{font-family:'Space Mono',monospace; font-size:0.78rem; color:var(--ink-soft);}
-  .price strong{color:var(--ink); font-family:'Jost',sans-serif; font-weight:500;}
+  .price strong{color:var(--ink); font-family:'Jost',sans-serif; font-weight:500; font-size:0.95rem;}
+
+  /* ---------- quantity stepper + add to cart ---------- */
+  .qty-add{display:flex; align-items:center; gap:8px;}
+  .qty-stepper{
+    display:flex; align-items:center; gap:0;
+    border:1px solid var(--line); border-radius:100px; overflow:hidden;
+    background:var(--bg);
+  }
+  .qty-btn{
+    width:26px; height:26px; border:none; background:none; cursor:pointer;
+    color:var(--ink); font-size:0.95rem; line-height:1; display:flex; align-items:center; justify-content:center;
+    transition:background .15s;
+  }
+  .qty-btn:hover{background:var(--sage);}
+  .qty-val{
+    min-width:20px; text-align:center; font-family:'Space Mono',monospace; font-size:0.8rem;
+  }
+  .add-cart-btn{white-space:nowrap;}
+  .add-cart-btn.added{background:var(--sage-deep); border-color:var(--sage-deep);}
+
+  /* ---------- cart floating button ---------- */
+  .cart-fab{
+    position:fixed; bottom:22px; left:22px; z-index:60;
+    width:56px; height:56px; border-radius:50%;
+    background:var(--ink); color:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 20px rgba(59,53,41,0.25);
+    transition:transform .2s ease;
+    border:none; cursor:pointer;
+  }
+  .cart-fab:hover{transform:scale(1.08);}
+  .cart-fab svg{width:24px;height:24px;}
+  .cart-badge{
+    position:absolute; top:-4px; right:-4px;
+    background:var(--rose-deep); color:#fff;
+    font-family:'Space Mono',monospace; font-size:0.68rem;
+    min-width:20px; height:20px; border-radius:100px;
+    display:flex; align-items:center; justify-content:center;
+    padding:0 4px; border:2px solid var(--bg);
+  }
+  .cart-badge[data-count="0"]{display:none;}
+  .nav-cart-btn{position:relative;}
+
+  /* ---------- cart drawer ---------- */
+  .cart-overlay{
+    position:fixed; inset:0; background:rgba(59,53,41,0.4);
+    z-index:70; opacity:0; pointer-events:none; transition:opacity .25s ease;
+  }
+  .cart-overlay.open{opacity:1; pointer-events:auto;}
+  .cart-drawer{
+    position:fixed; top:0; right:0; bottom:0; z-index:71;
+    width:min(420px, 100vw);
+    background:var(--bg);
+    box-shadow:-10px 0 30px rgba(59,53,41,0.15);
+    transform:translateX(100%);
+    transition:transform .3s ease;
+    display:flex; flex-direction:column;
+  }
+  .cart-drawer.open{transform:translateX(0);}
+  .cart-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 22px 18px; border-bottom:1px solid var(--line);
+  }
+  .cart-head h3{font-size:1.3rem;}
+  .cart-close{
+    width:34px; height:34px; border-radius:50%; border:1px solid var(--line);
+    background:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--ink);
+  }
+  .cart-close:hover{background:var(--bg-alt);}
+  .cart-items{flex:1; overflow-y:auto; padding:14px 22px;}
+  .cart-empty{
+    color:var(--ink-soft); font-size:0.92rem; text-align:center; padding:60px 10px;
+  }
+  .cart-item{
+    display:flex; gap:12px; padding:14px 0; border-bottom:1px dashed var(--line);
+  }
+  .cart-item img{width:58px; height:58px; object-fit:cover; border-radius:6px; flex-shrink:0;}
+  .cart-item-info{flex:1; min-width:0;}
+  .cart-item-info h4{font-family:'Fraunces',serif; font-weight:600; font-size:0.98rem; margin:0;}
+  .cart-item-price{font-family:'Space Mono',monospace; font-size:0.75rem; color:var(--ink-soft); margin-top:4px;}
+  .cart-item-row{display:flex; align-items:center; justify-content:space-between; margin-top:8px; gap:8px;}
+  .cart-item-remove{
+    background:none; border:none; color:var(--ink-soft); font-size:0.75rem; cursor:pointer;
+    text-decoration:underline; font-family:'Jost',sans-serif; padding:0;
+  }
+  .cart-item-remove:hover{color:var(--rose-deep);}
+  .cart-foot{
+    padding:18px 22px 24px; border-top:1px solid var(--line);
+  }
+  .cart-total-row{
+    display:flex; align-items:baseline; justify-content:space-between;
+    font-family:'Fraunces',serif; font-size:1.15rem; margin-bottom:6px;
+  }
+  .cart-tbc-note{
+    font-family:'Space Mono',monospace; font-size:0.68rem; color:var(--ink-soft);
+    margin-bottom:14px; line-height:1.5;
+  }
+  .cart-checkout-btn{width:100%; justify-content:center; padding:13px 20px;}
+  @media(prefers-reduced-motion: reduce){ .cart-overlay,.cart-drawer,.cart-fab{transition:none;} }
 
   /* ---------- category nav + groups ---------- */
   .cat-nav{
@@ -304,6 +403,10 @@
       <a class="icon-btn" href="https://www.instagram.com/earthy_eden_soaps/" target="_blank" rel="noopener" aria-label="Instagram">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1"/></svg>
       </a>
+      <button type="button" class="icon-btn nav-cart-btn" id="navCartBtn" aria-label="Open cart">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="21" r="1.3"/><circle cx="18" cy="21" r="1.3"/><path d="M2 3h2l2.6 12.6a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L21 7H6"/></svg>
+        <span class="cart-badge" id="navCartBadge" data-count="0">0</span>
+      </button>
       <a class="btn order-btn" data-msg="Hi! I'd like to know more about Earthy Eden Soaps." href="#">Order on WhatsApp</a>
       <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -396,7 +499,14 @@
             <div class="tags"><span class="tag">Made to Order</span><span class="tag">4 Colours</span><span class="tag">Gifting</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹249</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Blossom Cradle soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Blossom Cradle">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Blossom Cradle" data-price="249" data-img="images/Blossom_Cradle.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -411,7 +521,14 @@
             <div class="tags"><span class="tag">Made to Order</span><span class="tag">Gifting</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹249</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Ivory Calm soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Ivory Calm">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Ivory Calm" data-price="249" data-img="images/Ivory_Calm.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -426,7 +543,14 @@
             <div class="tags"><span class="tag">Made to Order</span><span class="tag">Gifting</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹249</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Rose Lullaby soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Rose Lullaby">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Rose Lullaby" data-price="249" data-img="images/Rose_Lullaby.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -449,7 +573,14 @@
             <div class="tags"><span class="tag">Coffee</span><span class="tag">Handmade</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹179</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Café Velvet soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Café Velvet">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Café Velvet" data-price="179" data-img="images/Cafe_Velvet.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -464,7 +595,14 @@
             <div class="tags"><span class="tag">Coffee</span><span class="tag">Gift Set</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹179</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Mocha Muse soap set from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Mocha Muse">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Mocha Muse" data-price="179" data-img="images/Mocha_Muse.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -487,7 +625,14 @@
             <div class="tags"><span class="tag">Neem</span><span class="tag">Purifying</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹149</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Neem Botanica soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Neem Botanica">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Neem Botanica" data-price="149" data-img="images/Neem_Botanica.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -502,7 +647,14 @@
             <div class="tags"><span class="tag">Neem</span><span class="tag">Duo Pack</span></div>
             <div class="card-foot">
               <span class="price">Price — <strong>on request</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Neem and Coffee soap pair from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Neem and Coffee">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Neem and Coffee" data-price="" data-img="images/Neem_and_Coffee.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -517,7 +669,14 @@
             <div class="tags"><span class="tag">Charcoal</span><span class="tag">Deep Cleanse</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹179</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Charcoal Midnight soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Charcoal Midnight">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Charcoal Midnight" data-price="179" data-img="images/Charcoal_Midnight.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -532,7 +691,14 @@
             <div class="tags"><span class="tag">Oats</span><span class="tag">Exfoliating</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹149</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Earth and Oats soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Earth and Oats">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Earth and Oats" data-price="149" data-img="images/Earth_and_Oats.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -547,7 +713,14 @@
             <div class="tags"><span class="tag">Honey</span><span class="tag">Nourishing</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹149</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Golden Nectar soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Golden Nectar">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Golden Nectar" data-price="149" data-img="images/Golden_Nectar.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -570,7 +743,14 @@
             <div class="tags"><span class="tag">Rose</span><span class="tag">Gifting</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹99</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Velvet Rose soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Velvet Rose">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Velvet Rose" data-price="99" data-img="images/Velvet_Rose.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -585,7 +765,14 @@
             <div class="tags"><span class="tag">Rose</span><span class="tag">2 Colours</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹89</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Rose Velvet soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Rose Velvet">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Rose Velvet" data-price="89" data-img="images/Rose_Velvet.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -600,7 +787,14 @@
             <div class="tags"><span class="tag">Rose</span><span class="tag">Romantic</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹89</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Gulabo soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Gulabo">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Gulabo" data-price="89" data-img="images/Gulabo.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -615,7 +809,14 @@
             <div class="tags"><span class="tag">Tulip</span><span class="tag">2 Colours</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹89</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Golden Tulip / Scarlet Tulip soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Golden Tulip & Scarlet Tulip">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Golden Tulip & Scarlet Tulip" data-price="89" data-img="images/Golden_Tulip___Scarlet_Tulip__Blooming_Tulips_.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -638,7 +839,14 @@
             <div class="tags"><span class="tag">2 Colours</span><span class="tag">Gifting</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹99</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Cupid's Angel soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Cupid's Angel">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Cupid's Angel" data-price="99" data-img="images/Cupid_s_Angel.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -653,7 +861,14 @@
             <div class="tags"><span class="tag">2 Colours</span><span class="tag">One-of-a-kind</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹99</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Marbled Hearts soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Marbled Hearts">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Marbled Hearts" data-price="99" data-img="images/Marbled_Hearts.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -668,7 +883,14 @@
             <div class="tags"><span class="tag">2 Colours</span><span class="tag">Decorative</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹99</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Petal Kiss soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Petal Kiss">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Petal Kiss" data-price="99" data-img="images/Petal_Kiss.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -683,7 +905,14 @@
             <div class="tags"><span class="tag">Ombré</span><span class="tag">Gifting</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹99</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Rosemilk Hearts soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Rosemilk Hearts">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Rosemilk Hearts" data-price="99" data-img="images/Rosemilk_Hearts.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -698,7 +927,14 @@
             <div class="tags"><span class="tag">Classic</span><span class="tag">Gifting</span></div>
             <div class="card-foot">
               <span class="price"><strong>₹299</strong></span>
-              <a class="btn small order-btn" data-msg="Hi! I'd like to order the Tender Heart soap from Earthy Eden Soaps." href="#">Order →</a>
+              <div class="qty-add">
+                <div class="qty-stepper" role="group" aria-label="Quantity for Tender Heart">
+                  <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-val">1</span>
+                  <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="btn small add-cart-btn" data-name="Tender Heart" data-price="299" data-img="images/Tender_Heart.jpg">Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
@@ -788,6 +1024,29 @@
   </div>
 </footer>
 
+<!-- ================= CART ================= -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer" role="dialog" aria-label="Shopping cart" aria-hidden="true">
+  <div class="cart-head">
+    <h3>Your Cart</h3>
+    <button type="button" class="cart-close" id="cartCloseBtn" aria-label="Close cart">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+    </button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <p class="cart-empty">Your cart is empty. Add a soap or two to get started 🌿</p>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none;">
+    <div class="cart-total-row"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <p class="cart-tbc-note" id="cartTbcNote" style="display:none;">Some items don't have a listed price yet — their cost will be confirmed on WhatsApp.</p>
+    <button type="button" class="btn cart-checkout-btn" id="cartCheckoutBtn">Checkout on WhatsApp</button>
+  </div>
+</div>
+<button type="button" class="cart-fab" id="cartFab" aria-label="Open cart">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="21" r="1.3"/><circle cx="18" cy="21" r="1.3"/><path d="M2 3h2l2.6 12.6a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L21 7H6"/></svg>
+  <span class="cart-badge" id="fabCartBadge" data-count="0">0</span>
+</button>
+
 <a class="wa-float order-btn" data-msg="Hi! I'd like to know more about Earthy Eden Soaps." href="#" aria-label="Order on WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1s-.6.8-.7.9-.3.2-.5.1a6.6 6.6 0 0 1-1.9-1.2 7.2 7.2 0 0 1-1.3-1.6c-.1-.2 0-.4.1-.5l.4-.4.2-.4v-.4c0-.1-.5-1.3-.7-1.8s-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3a1.9 1.9 0 0 0-.6 1.4c0 .8.6 1.6.7 1.7s1.2 1.9 3 2.6a10 10 0 0 0 1 .4c.4.1.8.1 1.1.1.3 0 1-.4 1.1-.8s.2-.7.1-.8-.2-.1-.4-.2Z"/></svg>
 </a>
@@ -814,6 +1073,166 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ================= CART =================
+  const CART_KEY = 'eeSoapsCart';
+
+  function loadCart(){
+    try{
+      const raw = localStorage.getItem(CART_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function saveCart(cart){
+    try{ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }catch(e){ /* storage unavailable, cart stays in memory for this session */ }
+  }
+
+  let cart = loadCart();
+
+  const cartOverlay = document.getElementById('cartOverlay');
+  const cartDrawer = document.getElementById('cartDrawer');
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartFootEl = document.getElementById('cartFoot');
+  const cartTotalEl = document.getElementById('cartTotal');
+  const cartTbcNoteEl = document.getElementById('cartTbcNote');
+  const navCartBadge = document.getElementById('navCartBadge');
+  const fabCartBadge = document.getElementById('fabCartBadge');
+
+  function openCart(){
+    cartOverlay.classList.add('open');
+    cartDrawer.classList.add('open');
+    cartDrawer.setAttribute('aria-hidden', 'false');
+  }
+  function closeCart(){
+    cartOverlay.classList.remove('open');
+    cartDrawer.classList.remove('open');
+    cartDrawer.setAttribute('aria-hidden', 'true');
+  }
+  document.getElementById('navCartBtn').addEventListener('click', openCart);
+  document.getElementById('cartFab').addEventListener('click', openCart);
+  document.getElementById('cartCloseBtn').addEventListener('click', closeCart);
+  cartOverlay.addEventListener('click', closeCart);
+
+  function renderCart(){
+    const items = Object.values(cart);
+    const totalCount = items.reduce((sum, i) => sum + i.qty, 0);
+    [navCartBadge, fabCartBadge].forEach(b => {
+      b.textContent = totalCount;
+      b.setAttribute('data-count', totalCount);
+    });
+
+    if (items.length === 0){
+      cartItemsEl.innerHTML = '<p class="cart-empty">Your cart is empty. Add a soap or two to get started \ud83c\udf3f</p>';
+      cartFootEl.style.display = 'none';
+      return;
+    }
+
+    let total = 0;
+    let hasTbc = false;
+
+    cartItemsEl.innerHTML = items.map(item => {
+      const hasPrice = item.price !== null && item.price !== '';
+      const lineTotal = hasPrice ? (Number(item.price) * item.qty) : 0;
+      if (hasPrice) total += lineTotal; else hasTbc = true;
+      const priceText = hasPrice ? `\u20b9${item.price} \u00d7 ${item.qty} = \u20b9${lineTotal}` : 'Price to be confirmed';
+      return `
+        <div class="cart-item" data-name="${item.name}">
+          <img src="${item.img}" alt="${item.name}">
+          <div class="cart-item-info">
+            <h4>${item.name}</h4>
+            <div class="cart-item-price">${priceText}</div>
+            <div class="cart-item-row">
+              <div class="qty-stepper" role="group" aria-label="Quantity for ${item.name}">
+                <button type="button" class="qty-btn cart-qty-minus" aria-label="Decrease quantity">\u2212</button>
+                <span class="qty-val">${item.qty}</span>
+                <button type="button" class="qty-btn cart-qty-plus" aria-label="Increase quantity">+</button>
+              </div>
+              <button type="button" class="cart-item-remove">Remove</button>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+
+    cartTotalEl.textContent = `\u20b9${total}`;
+    cartTbcNoteEl.style.display = hasTbc ? 'block' : 'none';
+    cartFootEl.style.display = 'block';
+
+    cartItemsEl.querySelectorAll('.cart-item').forEach(row => {
+      const name = row.getAttribute('data-name');
+      row.querySelector('.cart-qty-plus').addEventListener('click', () => { cart[name].qty++; saveCart(cart); renderCart(); });
+      row.querySelector('.cart-qty-minus').addEventListener('click', () => {
+        cart[name].qty--;
+        if (cart[name].qty <= 0) delete cart[name];
+        saveCart(cart); renderCart();
+      });
+      row.querySelector('.cart-item-remove').addEventListener('click', () => { delete cart[name]; saveCart(cart); renderCart(); });
+    });
+  }
+
+  function addToCart(name, price, img, qty){
+    const priceVal = price === '' ? null : price;
+    if (cart[name]){
+      cart[name].qty += qty;
+    } else {
+      cart[name] = { name, price: priceVal, img, qty };
+    }
+    saveCart(cart);
+    renderCart();
+  }
+
+  // per-card quantity steppers + add to cart buttons
+  document.querySelectorAll('.card').forEach(card => {
+    const stepper = card.querySelector('.qty-stepper');
+    if (!stepper) return;
+    const valEl = stepper.querySelector('.qty-val');
+    const minus = stepper.querySelector('.qty-minus');
+    const plus = stepper.querySelector('.qty-plus');
+    const addBtn = card.querySelector('.add-cart-btn');
+
+    minus.addEventListener('click', () => {
+      let v = parseInt(valEl.textContent, 10);
+      if (v > 1) valEl.textContent = v - 1;
+    });
+    plus.addEventListener('click', () => {
+      let v = parseInt(valEl.textContent, 10);
+      valEl.textContent = v + 1;
+    });
+    addBtn.addEventListener('click', () => {
+      const qty = parseInt(valEl.textContent, 10);
+      addToCart(addBtn.dataset.name, addBtn.dataset.price, addBtn.dataset.img, qty);
+      valEl.textContent = 1;
+      const originalText = addBtn.textContent;
+      addBtn.textContent = 'Added ✓';
+      addBtn.classList.add('added');
+      setTimeout(() => { addBtn.textContent = originalText; addBtn.classList.remove('added'); }, 1200);
+      openCart();
+    });
+  });
+
+  document.getElementById('cartCheckoutBtn').addEventListener('click', () => {
+    const items = Object.values(cart);
+    if (items.length === 0) return;
+    let lines = ["Hi! I'd like to order the following from Earthy Eden Soaps:", ""];
+    let total = 0;
+    items.forEach((item, i) => {
+      const hasPrice = item.price !== null && item.price !== '';
+      if (hasPrice){
+        const lineTotal = Number(item.price) * item.qty;
+        total += lineTotal;
+        lines.push(`${i+1}. ${item.name} x${item.qty} — \u20b9${lineTotal}`);
+      } else {
+        lines.push(`${i+1}. ${item.name} x${item.qty} — price to confirm`);
+      }
+    });
+    lines.push("");
+    lines.push(`Total: \u20b9${total}${items.some(it => it.price === null || it.price === '') ? ' + items to confirm' : ''}`);
+    lines.push("");
+    lines.push("Please confirm availability and delivery details.");
+    const msg = lines.join('\n');
+    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  });
+
+  renderCart();
 </script>
 
 </body>
