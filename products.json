@@ -2,28 +2,28 @@
   "categories": [
     {
       "id": "baby",
-      "title": "Baby &amp; Nursery",
+      "title": "Baby & Nursery",
       "subtitle": "Sculpted keepsake bars"
     },
     {
       "id": "coffee",
-      "title": "Coffee &amp; Mocha",
+      "title": "Coffee & Mocha",
       "subtitle": "For your coffee-break ritual"
     },
     {
       "id": "herbal",
-      "title": "Herbal &amp; Earthy",
+      "title": "Herbal & Earthy",
       "subtitle": "Purifying, exfoliating, grounding"
     },
     {
       "id": "rose",
-      "title": "Rose &amp; Floral",
+      "title": "Rose & Floral",
       "subtitle": "Sculpted bouquets and blooms"
     },
     {
       "id": "hearts",
-      "title": "Hearts &amp; Gifting",
-      "subtitle": "For Valentine's, weddings &amp; return gifts"
+      "title": "Hearts & Gifting",
+      "subtitle": "For Valentine's, weddings & return gifts"
     }
   ],
   "products": [
